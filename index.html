@@ -18,13 +18,13 @@
     --bg:#05080F;
     --surface:rgba(13,20,36,.74); --surface2:rgba(140,180,255,.08); --surface3:rgba(140,180,255,.14);
     --ink:#EAF2FF; --ink-soft:#93A3C4; --line:rgba(120,160,255,.16);
-    --accent:#29E0FF; --accent-ink:#04121C; --accent-soft:rgba(41,224,255,.13);
+    --accent:#4C84DE; --accent-ink:#FFFFFF; --accent-soft:rgba(62,119,201,.18);
     --protein:#3DDC84; --protein-soft:rgba(61,220,132,.14);
     --good:#3DDC84; --warn:#FFB020; --bad:#FF4D5E;
-    --gold:#FFD84D; --rd-red:#FF3B5C;
-    --hero-ink:#F4F8FF; --hero-soft:#D8E4F8; --hero-accent:#FFD84D;
+    --rd-azul:#002D62; --rd-rojo:#CE1126;
+    --hero-ink:#F4F8FF; --hero-soft:#D8E4F8; --hero-accent:#E8EDF5;
     --nav-bg:rgba(7,12,21,.82);
-    --glow:rgba(41,224,255,.35);
+    --glow:rgba(76,132,222,.35);
     --shadow:0 1px 2px rgba(0,0,0,.5),0 10px 30px rgba(0,0,0,.45);
   }
 
@@ -382,7 +382,7 @@
           <defs>
             <linearGradient id="gradKcal" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" style="stop-color:var(--accent)"/>
-              <stop offset="1" style="stop-color:var(--protein)"/>
+              <stop offset="1" style="stop-color:var(--rd-rojo)"/>
             </linearGradient>
           </defs>
           <circle class="track" cx="75" cy="75" r="62"/>
@@ -689,15 +689,15 @@
       return true;
     }
 
-    var COLORES = ["#29E0FF","#FFD84D","#FF3B5C","#F4F8FF","#29E0FF","#3DDC84"];
+    var COLORES = ["#3E77C9","#CE1126","#FFFFFF","#4C84DE","#E8EDF5","#CE1126"];
     var TXT = "ANIMAL";
     try{
       var perf = JSON.parse(localStorage.getItem("modo-animal-v1"));
       if(perf && perf.perfil && perf.perfil.nombre) TXT = String(perf.perfil.nombre).toUpperCase().slice(0,8);
     }catch(e){}
     var parts = [];
-    var T1 = 1150, T2 = 2150, T3 = 2750;
-    var start = 0, raf = 0, burstDone = false, subOn = false, outOn = false;
+    var T1 = 1150;
+    var start = 0, raf = 0, clickT = -1, burstDone = false, subOn = false, outOn = false;
 
     function build(){
       var off = document.createElement("canvas");
@@ -748,7 +748,8 @@
       var t = now - start;
       ctx.clearRect(0,0,W,H);
       var i, p;
-      if(t < T2){
+      if(clickT < 0){
+        // ensamblar y quedarse latiendo hasta que el usuario toque "Entrar"
         for(i=0;i<parts.length;i++){
           p = parts[i];
           if(t > p.d){
@@ -762,6 +763,7 @@
         ctx.globalAlpha = 1;
         if(!subOn && t > 950){ subOn = true; document.getElementById("introSub").classList.add("on"); }
       } else {
+        var bt = now - clickT;
         if(!burstDone){
           burstDone = true;
           var cx = W/2, cy = H/2;
@@ -771,7 +773,7 @@
             p.vy = (p.y-cy)*0.03*(0.4+Math.random()) + (Math.random()-0.5)*7 - 2;
           }
         }
-        var fade = Math.max(0, 1-(t-T2)/500);
+        var fade = Math.max(0, 1-bt/500);
         for(i=0;i<parts.length;i++){
           p = parts[i];
           p.x += p.vx; p.y += p.vy; p.vy += 0.22;
@@ -780,8 +782,8 @@
           ctx.fillRect(p.x, p.y, p.s, p.s);
         }
         ctx.globalAlpha = 1;
-        if(!outOn && t > T2+180){ outOn = true; el.classList.add("out"); document.body.classList.add("ready"); }
-        if(t > T3){ cancelAnimationFrame(raf); done(); return; }
+        if(!outOn && bt > 180){ outOn = true; el.classList.add("out"); document.body.classList.add("ready"); }
+        if(bt > 600){ cancelAnimationFrame(raf); done(); return; }
       }
       raf = requestAnimationFrame(frame);
     }
@@ -798,10 +800,9 @@
       raf = requestAnimationFrame(frame);
     }
     el.addEventListener("pointerdown", function(){
-      // saltar al estallido
+      // solo se entra con un toque
       if(!start){ done(); return; }
-      var t = performance.now() - start;
-      if(t < T2){ start = performance.now() - T2; }
+      if(clickT < 0){ clickT = performance.now(); }
     });
     try{
       if(document.fonts && document.fonts.load){
@@ -1464,7 +1465,7 @@
       ctx.setTransform(DPR,0,0,DPR,0,0);
     }
     fit();
-    var cols = ["#29E0FF","#FFD84D","#FF3B5C","#F4F8FF"];
+    var cols = ["#3E77C9","#CE1126","#F4F8FF","#4C84DE"];
     for(var i=0;i<44;i++){
       parts.push({ x:Math.random()*W, y:Math.random()*H, v:0.1+Math.random()*0.3,
                    s:1+Math.random()*2, a:Math.random()*6.28, c:cols[i%cols.length] });
@@ -1485,9 +1486,9 @@
       f++;
       if(f%2) return;
       ctx.clearRect(0,0,W,H);
-      onda(H*0.78, 14, 0.012, 0.006, "#29E0FF", 0.10);
-      onda(H*0.84, 18, 0.009, -0.004, "#FF3B5C", 0.08);
-      onda(H*0.90, 12, 0.014, 0.005, "#FFD84D", 0.07);
+      onda(H*0.78, 14, 0.012, 0.006, "#3E77C9", 0.10);
+      onda(H*0.84, 18, 0.009, -0.004, "#CE1126", 0.08);
+      onda(H*0.90, 12, 0.014, 0.005, "#F4F8FF", 0.05);
       for(var i=0;i<parts.length;i++){
         var p = parts[i];
         p.y -= p.v;
