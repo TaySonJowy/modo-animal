@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070912">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Modo Animal">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦍</text></svg>">
+</head>
+<body>
+<title>Joel Modo Animal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Sans:wght@400..700&display=swap">
+<style>
+  :root{
+    --bg:#F3F4FA; --surface:#FFFFFF; --surface2:#EAEDF6; --surface3:#DFE4F2;
+    --ink:#131829; --ink-soft:#565E79; --line:#D8DDEC;
+    --accent:#2C46D6; --accent-ink:#FFFFFF; --accent-soft:#E2E7FC;
+    --protein:#0F8A5F; --protein-soft:#DCF2E8;
+    --good:#0F8A5F; --warn:#B4700F; --bad:#C23B3B;
+    --hero-bg1:#161B33; --hero-bg2:#0D101F; --hero-ink:#F2F4FF; --hero-soft:#8E97C4; --hero-accent:#8FA2FF;
+    --nav-bg:rgba(255,255,255,.88);
+    --glow:rgba(44,70,214,.22);
+    --shadow:0 1px 2px rgba(19,24,41,.06),0 8px 24px rgba(19,24,41,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0C0F1A; --surface:#151A2B; --surface2:#1D2338; --surface3:#252C45;
+      --ink:#EAEDF8; --ink-soft:#98A1BE; --line:#293049;
+      --accent:#7D93FF; --accent-ink:#0C0F1A; --accent-soft:#232C52;
+      --protein:#3CC993; --protein-soft:#16352A;
+      --good:#3CC993; --warn:#E09A3E; --bad:#E0605A;
+      --hero-bg1:#181E3A; --hero-bg2:#0B0E1C; --hero-ink:#F2F4FF; --hero-soft:#8E97C4; --hero-accent:#8FA2FF;
+      --nav-bg:rgba(16,20,35,.9);
+      --glow:rgba(125,147,255,.4);
+      --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0C0F1A; --surface:#151A2B; --surface2:#1D2338; --surface3:#252C45;
+    --ink:#EAEDF8; --ink-soft:#98A1BE; --line:#293049;
+    --accent:#7D93FF; --accent-ink:#0C0F1A; --accent-soft:#232C52;
+    --protein:#3CC993; --protein-soft:#16352A;
+    --good:#3CC993; --warn:#E09A3E; --bad:#E0605A;
+    --hero-bg1:#181E3A; --hero-bg2:#0B0E1C; --hero-ink:#F2F4FF; --hero-soft:#8E97C4; --hero-accent:#8FA2FF;
+    --nav-bg:rgba(16,20,35,.9);
+    --glow:rgba(125,147,255,.4);
+    --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg); color:var(--ink); margin:0;
+    font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px; line-height:1.5;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+    overscroll-behavior-y:none;
+  }
+  main{max-width:480px; margin:0 auto; padding:12px 12px calc(94px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:13px}
+
+  .display{font-family:"Archivo",system-ui,-apple-system,sans-serif; font-stretch:118%; font-weight:800}
+  .num{font-family:"Archivo",system-ui,sans-serif; font-weight:800; font-variant-numeric:tabular-nums}
+  .label{font-size:.72rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
+  h2{font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 8px; font-weight:700; display:flex; align-items:center; gap:8px}
+  h2::before{content:""; width:8px; height:8px; background:var(--accent); flex:none}
+
+  button, .chip, .check, .cbx{user-select:none; -webkit-user-select:none}
+
+  /* ================= INTRO DE PÍXELES ================= */
+  #intro{
+    position:fixed; inset:0; z-index:100; background:#070912;
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .5s ease; cursor:pointer;
+  }
+  #intro.out{opacity:0; pointer-events:none}
+  #introCv{position:absolute; inset:0; width:100%; height:100%}
+  .intro-sub{
+    position:absolute; left:0; right:0; top:calc(50% + 74px); text-align:center;
+    color:#8E97C4; font:600 .8rem "Instrument Sans",system-ui,sans-serif;
+    letter-spacing:.55em; text-indent:.55em; text-transform:uppercase;
+    opacity:0; transform:translateY(8px); transition:opacity .6s ease, transform .6s ease;
+  }
+  .intro-sub.on{opacity:1; transform:translateY(0)}
+
+  /* entrada escalonada del contenido */
+  @keyframes rise{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:translateY(0)}}
+  .pane.activa > *{animation:rise .55s cubic-bezier(.2,.7,.3,1) both}
+  .pane.activa > :nth-child(1){animation-delay:.03s}
+  .pane.activa > :nth-child(2){animation-delay:.09s}
+  .pane.activa > :nth-child(3){animation-delay:.15s}
+  .pane.activa > :nth-child(4){animation-delay:.21s}
+  .pane.activa > :nth-child(5){animation-delay:.27s}
+  body:not(.ready) .pane.activa > *{animation-play-state:paused}
+  body:not(.ready) .hero{animation-play-state:paused}
+  .hero{animation:rise .55s cubic-bezier(.2,.7,.3,1) both}
+
+  /* ================= HERO ================= */
+  .hero{
+    border-radius:20px; padding:22px 18px 18px; color:var(--hero-ink); position:relative; overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 12px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 12px),
+      linear-gradient(140deg, var(--hero-bg1), var(--hero-bg2));
+    box-shadow:var(--shadow);
+  }
+  #heroCv{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
+  .hero .cont{position:relative}
+  .hero .eyebrow{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--hero-accent)}
+  .hero h1{margin:.1em 0 0; line-height:.94; letter-spacing:.01em; font-size:2.8rem; font-stretch:124%; font-weight:900; text-wrap:balance}
+  .hero .grad{
+    background:linear-gradient(92deg, #8FA2FF 10%, #3CC993 90%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero .outline{display:block; color:transparent; -webkit-text-stroke:1.5px var(--hero-ink); font-size:.76em; letter-spacing:.045em}
+  @supports not (-webkit-text-stroke: 1px black){ .hero .outline{color:var(--hero-ink)} }
+  .hero .fecha{color:var(--hero-soft); margin-top:10px; font-size:.9rem}
+  .hero.mini{padding:13px 18px}
+  .hero.mini h1{font-size:1.35rem; display:flex; align-items:baseline; gap:10px}
+  .hero.mini .outline{font-size:.95em}
+  .hero.mini .eyebrow, .hero.mini .fecha{display:none}
+
+  /* ================= PESTAÑAS ================= */
+  .pane{display:none; flex-direction:column; gap:13px}
+  .pane.activa{display:flex}
+
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow)}
+  .card.clip{overflow:hidden}
+  section.card{padding:16px}
+
+  .chips{display:flex; gap:8px}
+  .chip{
+    flex:1; border:1px solid var(--line); background:var(--surface); color:var(--ink-soft);
+    border-radius:14px; padding:10px 4px; font:600 .82rem "Instrument Sans",system-ui,sans-serif;
+    cursor:pointer; text-align:center; transition:transform .12s ease;
+  }
+  .chip:active{transform:scale(.95)}
+  .chip small{display:block; font-weight:400; font-size:.72rem}
+  .chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+
+  /* ---- anillo ---- */
+  .anillo-wrap{display:flex; flex-direction:column; align-items:center; gap:12px}
+  .anillo{position:relative; width:196px; height:196px}
+  .anillo svg{width:100%; height:100%; transform:rotate(-90deg); filter:drop-shadow(0 0 10px var(--glow))}
+  .anillo .track{fill:none; stroke:var(--surface2); stroke-width:13}
+  .anillo .prog{fill:none; stroke:url(#gradKcal); stroke-width:13; stroke-linecap:round; transition:stroke-dashoffset .6s cubic-bezier(.2,.7,.3,1)}
+  .anillo .centro{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center}
+  .anillo .centro .valor{font-size:2.55rem; line-height:1}
+  .anillo .centro .meta{color:var(--ink-soft); font-size:.85rem; margin-top:2px}
+  .anillo .centro .pct{font-size:.72rem; font-weight:700; color:var(--accent); letter-spacing:.08em; margin-top:5px}
+  .prot-linea{width:100%}
+  .prot-linea .fila{display:flex; justify-content:space-between; align-items:baseline; font-size:.9rem}
+  .prot-linea .fila b{color:var(--protein)}
+  .barra{height:10px; border-radius:999px; background:var(--surface2); margin-top:6px; overflow:hidden}
+  .barra i{display:block; height:100%; border-radius:999px; background:var(--protein); width:0%; transition:width .5s cubic-bezier(.2,.7,.3,1)}
+  #msgHoy{margin:0; font-size:.92rem; color:var(--ink-soft); text-align:center; text-wrap:balance}
+  #msgHoy strong{color:var(--ink)}
+  #menuFrase{margin:9px 2px 0; font-size:.86rem; color:var(--ink-soft); font-style:italic}
+
+  /* ---- menú semanal ---- */
+  .sem-hoy{background:var(--accent-soft); border-radius:13px; padding:10px 12px; font-size:.9rem; color:var(--ink-soft)}
+  .sem-hoy p{margin:0}
+  .sem-hoy b{color:var(--ink)}
+  .sem-hoy .sem-nota{font-size:.8rem; margin-top:4px}
+  .semana details{margin-top:10px; border-top:1px solid var(--line)}
+  .semana summary{list-style:none; cursor:pointer; padding:10px 0 2px; font-weight:600; font-size:.88rem; color:var(--accent)}
+  .semana summary::-webkit-details-marker{display:none}
+  .semana summary::before{content:"▸ "}
+  .semana details[open] summary::before{content:"▾ "}
+  .sem-dia{display:flex; gap:10px; padding:9px 0; border-top:1px dashed var(--line); font-size:.88rem; align-items:flex-start}
+  .sem-dia:first-child{border-top:none}
+  .sem-letra{
+    width:28px; height:28px; flex:none; border-radius:9px; background:var(--surface2); color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; font:800 .85rem "Archivo",system-ui,sans-serif; font-stretch:118%;
+  }
+  .sem-dia.hoy .sem-letra{background:var(--accent); color:var(--accent-ink)}
+  .sem-dia .sem-txt{flex:1; min-width:0; color:var(--ink-soft)}
+  .sem-dia .sem-txt p{margin:0}
+  .sem-dia .sem-txt b{color:var(--ink)}
+  .sem-dia .sem-txt .nota{font-size:.78rem; color:var(--accent); margin-top:2px}
+  .sem-pie{font-size:.78rem; color:var(--ink-soft); margin:10px 0 0}
+
+  /* ---- comidas ---- */
+  .comida{overflow:hidden}
+  .comida + .comida, .extra{margin-top:10px}
+  .comida .cab{display:flex; align-items:center; gap:12px; padding:14px}
+  .icono{
+    width:42px; height:42px; flex:none; border-radius:13px; background:var(--accent-soft); color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icono svg{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+  .comida .info{flex:1; min-width:0}
+  .comida .nombre{font-size:1.03rem; font-weight:700; margin:0}
+  .comida .macros{font-size:.84rem; color:var(--ink-soft); margin:0}
+  .comida .macros b{color:var(--protein); font-weight:600}
+  .check{
+    width:46px; height:46px; flex:none; border-radius:13px; border:2px solid var(--line);
+    background:var(--surface2); color:transparent; font-size:1.3rem; cursor:pointer; line-height:1;
+    position:relative; transition:transform .15s cubic-bezier(.3,1.6,.5,1);
+  }
+  .check:active{transform:scale(.88)}
+  .check[aria-pressed="true"]{background:var(--good); border-color:var(--good); color:#fff; transform:scale(1)}
+  .px{
+    position:absolute; left:50%; top:50%; width:5px; height:5px; pointer-events:none;
+    animation:fly .55s ease-out forwards;
+  }
+  .px.pa{background:var(--accent)} .px.pb{background:var(--good)} .px.pc{background:var(--ink)}
+  @keyframes fly{
+    from{transform:translate(-50%,-50%); opacity:1}
+    to{transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))); opacity:0}
+  }
+  .comida.hecha .cab{opacity:.6}
+  .comida details{border-top:1px solid var(--line)}
+  .comida summary{list-style:none; cursor:pointer; padding:10px 14px; font-size:.85rem; font-weight:600; color:var(--accent)}
+  .comida summary::-webkit-details-marker{display:none}
+  .comida summary::before{content:"▸ "}
+  .comida details[open] summary::before{content:"▾ "}
+  .comida .detalle{padding:0 14px 14px; font-size:.92rem}
+  .comida .detalle ul{margin:6px 0; padding-left:20px}
+  .comida .detalle li{margin:3px 0}
+  .comida .detalle .tip{color:var(--ink-soft); font-size:.86rem; margin:8px 0 0}
+  .cant{font-weight:700}
+
+  .extra{display:flex; align-items:center; gap:12px; padding:13px 14px}
+  .extra .info{flex:1}
+  .extra .nombre{font-weight:700; font-size:.98rem; margin:0}
+  .extra .macros{font-size:.83rem; color:var(--ink-soft); margin:0}
+
+  /* ---- entreno ---- */
+  .entreno-nota{font-size:.9rem; color:var(--ink-soft); margin:0; padding:0 2px}
+  .entreno-nota b{color:var(--ink)}
+  .dia{display:flex; gap:12px; padding:13px 14px; align-items:flex-start}
+  .dia + .dia{border-top:1px solid var(--line)}
+  .dia .letra{
+    width:42px; height:42px; flex:none; border-radius:13px; background:var(--surface2); color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; font:800 1.05rem "Archivo",system-ui,sans-serif; font-stretch:118%;
+  }
+  .dia .info{flex:1; min-width:0}
+  .dia .grupos{font-weight:700; font-size:1rem; margin:0}
+  .dia .series{font-size:.86rem; color:var(--ink-soft); margin:1px 0 0}
+  .dia .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:7px}
+  .tag{font-size:.76rem; font-weight:600; border-radius:999px; padding:3px 10px}
+  .tag.cardio{background:var(--accent-soft); color:var(--accent)}
+  .tag.abs{background:var(--protein-soft); color:var(--protein)}
+  .tag.off{background:var(--surface2); color:var(--ink-soft)}
+  .dia.hoy{background:var(--accent-soft)}
+  .dia.hoy .letra{background:var(--accent); color:var(--accent-ink)}
+  .dia .check{width:42px; height:42px}
+  .cardio-card p{margin:0; font-size:.9rem; color:var(--ink-soft)}
+  .cardio-card p b{color:var(--ink)}
+
+  /* ---- báscula ---- */
+  .peso-form{display:flex; gap:8px; margin-top:10px}
+  .peso-form input{
+    flex:1; min-width:0; border:1px solid var(--line); background:var(--surface2); color:var(--ink);
+    border-radius:13px; padding:11px 12px; font:600 1rem "Archivo",system-ui,sans-serif; font-variant-numeric:tabular-nums;
+  }
+  .peso-form input::placeholder{color:var(--ink-soft); font-weight:400}
+  .peso-form button{
+    border:none; background:var(--accent); color:var(--accent-ink); border-radius:13px; padding:11px 16px;
+    font:700 .95rem "Instrument Sans",system-ui,sans-serif; cursor:pointer;
+  }
+  .peso-form button:active{transform:scale(.95)}
+  #spark{width:100%; height:56px; margin-top:12px; display:none}
+  #spark polyline{fill:none; stroke:var(--accent); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
+  #spark circle{fill:var(--accent)}
+  #veredicto{margin:10px 0 0; padding:10px 12px; border-radius:13px; background:var(--surface2); font-size:.92rem}
+  #veredicto.good{background:var(--protein-soft); color:var(--good); font-weight:600}
+  #veredicto.warn{color:var(--warn); font-weight:600}
+  #veredicto.bad{color:var(--bad); font-weight:600}
+  #cinturaNota{margin:8px 0 0; font-size:.88rem; color:var(--ink-soft)}
+  #cinturaNota.good{color:var(--good); font-weight:600}
+  #historial{margin:10px 0 0; padding:0; list-style:none; font-size:.88rem; color:var(--ink-soft)}
+  #historial li{display:flex; justify-content:space-between; gap:8px; padding:4px 0; border-top:1px dashed var(--line)}
+  #historial .num{font-weight:700; color:var(--ink); font-size:.88rem}
+  #historial .cm{color:var(--ink-soft); font-weight:400}
+
+  /* ---- guía ---- */
+  .reglas details{border-top:1px solid var(--line)}
+  .reglas details:first-of-type{border-top:none}
+  .reglas summary{list-style:none; cursor:pointer; padding:11px 0; font-weight:600; font-size:.95rem}
+  .reglas summary::-webkit-details-marker{display:none}
+  .reglas summary::before{content:"▸ "; color:var(--accent)}
+  .reglas details[open] summary::before{content:"▾ "; color:var(--accent)}
+  .reglas p{margin:0 0 10px; font-size:.92rem; color:var(--ink-soft)}
+  .reglas p b{color:var(--ink)}
+
+  .compra ul{list-style:none; margin:8px 0 0; padding:0}
+  .compra li{display:flex; align-items:center; gap:10px; padding:7px 0; border-top:1px dashed var(--line); font-size:.93rem}
+  .compra li:first-child{border-top:none}
+  .compra .cbx{
+    width:28px; height:28px; flex:none; border-radius:8px; border:2px solid var(--line);
+    background:var(--surface2); color:transparent; cursor:pointer; font-size:.9rem; line-height:1; padding:0;
+  }
+  .compra .cbx[aria-pressed="true"]{background:var(--good); border-color:var(--good); color:#fff}
+  .compra li .txt{flex:1}
+  .compra li[data-done="1"] .txt{opacity:.5; text-decoration:line-through}
+  .compra .precio{color:var(--ink-soft); font-size:.85rem; font-variant-numeric:tabular-nums}
+  .compra .nota{margin:10px 0 0; font-size:.8rem; color:var(--ink-soft)}
+
+  footer{color:var(--ink-soft); font-size:.78rem; padding:2px 4px 0}
+
+  /* ---- nav inferior ---- */
+  nav.tabs{
+    position:fixed; bottom:0; left:0; right:0; z-index:10;
+    background:var(--nav-bg); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  nav.tabs .inner{max-width:480px; margin:0 auto; display:flex; gap:4px}
+  nav.tabs button{
+    flex:1; border:none; background:transparent; color:var(--ink-soft); cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    font:600 .68rem "Instrument Sans",system-ui,sans-serif; letter-spacing:.03em;
+    padding:7px 2px; border-radius:12px; transition:transform .12s ease;
+  }
+  nav.tabs button:active{transform:scale(.92)}
+  nav.tabs button svg{width:23px; height:23px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+  nav.tabs button[aria-pressed="true"]{color:var(--accent); background:var(--accent-soft)}
+
+  button:focus-visible, input:focus-visible, summary:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important}
+  }
+</style>
+
+<div id="intro" aria-hidden="true">
+  <canvas id="introCv"></canvas>
+  <div class="intro-sub" id="introSub">Modo Animal</div>
+</div>
+
+<main>
+  <header class="hero" id="hero">
+    <canvas id="heroCv" aria-hidden="true"></canvas>
+    <div class="cont">
+      <div class="eyebrow">Recomposición · 85 kg y marcado</div>
+      <h1 class="display"><span class="grad">JOEL</span><span class="outline">MODO ANIMAL</span></h1>
+      <div class="fecha" id="fecha"></div>
+    </div>
+  </header>
+
+  <!-- ============ HOY ============ -->
+  <div class="pane activa" id="pane-hoy">
+
+    <div class="chips" role="group" aria-label="Objetivo">
+      <button class="chip" data-goal="rec" aria-pressed="true">Recomposición<small>3.100 kcal</small></button>
+      <button class="chip" data-goal="def" aria-pressed="false">Definir más<small>2.600 kcal</small></button>
+      <button class="chip" data-goal="vol" aria-pressed="false">Volumen<small>3.200 kcal</small></button>
+    </div>
+
+    <section class="card anillo-wrap" aria-label="Progreso de hoy">
+      <div class="anillo">
+        <svg viewBox="0 0 150 150" aria-hidden="true">
+          <defs>
+            <linearGradient id="gradKcal" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" style="stop-color:var(--accent)"/>
+              <stop offset="1" style="stop-color:var(--protein)"/>
+            </linearGradient>
+          </defs>
+          <circle class="track" cx="75" cy="75" r="62"/>
+          <circle class="prog" id="ringProg" cx="75" cy="75" r="62" stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
+        </svg>
+        <div class="centro">
+          <span class="valor num" id="kcalNum">0</span>
+          <span class="meta">de <span class="num" id="kcalMeta">3.100</span> kcal</span>
+          <span class="pct" id="kcalPct">0%</span>
+        </div>
+      </div>
+      <div class="prot-linea">
+        <div class="fila"><span class="label">Proteína</span><span class="num"><b id="protNum">0</b> / 160 g</span></div>
+        <div class="barra"><i id="protBar"></i></div>
+      </div>
+      <p id="msgHoy"></p>
+    </section>
+
+    <div>
+      <h2>El menú según la cartera</h2>
+      <div class="chips" role="group" aria-label="Menú">
+        <button class="chip" data-menu="pobre" aria-pressed="false">🪫 Mes pobre<small>~3,70 €/día</small></button>
+        <button class="chip" data-menu="medio" aria-pressed="true">⚖️ Mes medio<small>~5 €/día</small></button>
+        <button class="chip" data-menu="paga" aria-pressed="false">💸 Día de paga<small>~8 €/día</small></button>
+      </div>
+      <p id="menuFrase"></p>
+    </div>
+
+    <div>
+      <h2>Comidas de hoy · en cocinado</h2>
+
+      <article class="card comida" data-meal="batido">
+        <div class="cab">
+          <div class="icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3h8l-1.5 14a2.5 2.5 0 0 1-2.5 2.3A2.5 2.5 0 0 1 9.5 17Z"/><path d="M7.6 8h8.8"/><path d="M12 3V1.5"/></svg></div>
+          <div class="info">
+            <p class="nombre">El batido</p>
+            <p class="macros num">950 kcal · <b>35 g</b> proteína</p>
+          </div>
+          <button class="check" aria-pressed="false" aria-label="Marcar batido como tomado">✓</button>
+        </div>
+        <details>
+          <summary>Qué lleva</summary>
+          <div class="detalle">
+            <ul>
+              <li><span class="cant">100 g</span> de avena</li>
+              <li><span class="cant">400–500 ml</span> de leche entera</li>
+              <li><span class="cant">1</span> plátano</li>
+              <li><span class="cant">30 g</span> de crema de cacahuete (1 cucharada colmada)</li>
+              <li>Opcional: cacao puro para el sabor</li>
+            </ul>
+            <p class="tip">Batido la noche anterior y a la nevera: la avena se ablanda y queda más fino. Hazlo cada noche, no para varios días. Nada de huevo crudo — si quieres más proteína, un yogur o leche en polvo.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="card comida" data-meal="comida">
+        <div class="cab">
+          <div class="icono" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/></svg></div>
+          <div class="info">
+            <p class="nombre">La comida</p>
+            <p class="macros num">1.100 kcal · <b>60 g</b> proteína</p>
+          </div>
+          <button class="check" aria-pressed="false" aria-label="Marcar comida como hecha">✓</button>
+        </div>
+        <details>
+          <summary>Qué lleva</summary>
+          <div class="detalle">
+            <ul>
+              <li><span class="cant">400 g</span> de arroz cocido (un plato hondo lleno, sin colmar)</li>
+              <li><span class="cant">250 g</span> de contramuslo de pollo ya cocinado y sin hueso (~350 g en crudo con hueso)</li>
+              <li>Verdura congelada, la que quieras</li>
+              <li><span class="cant">1 chorro</span> de aceite de oliva (~10 ml)</li>
+            </ul>
+            <p class="tip">Si es carne picada: no es lo mismo que el pollo (250–270 kcal/100 g frente a 165). Cómprala con menos de 10&nbsp;% de grasa o baja la ración a 300 g.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="card comida" data-meal="cena">
+        <div class="cab">
+          <div class="icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5Z"/></svg></div>
+          <div class="info">
+            <p class="nombre">La cena</p>
+            <p class="macros num">1.050 kcal · <b>65 g</b> proteína</p>
+          </div>
+          <button class="check" aria-pressed="false" aria-label="Marcar cena como hecha">✓</button>
+        </div>
+        <details>
+          <summary>Qué lleva</summary>
+          <div class="detalle">
+            <ul>
+              <li><span class="cant">300 g</span> de lentejas o garbanzos cocidos (plato hondo, o 3/4 de bote grande escurrido)</li>
+              <li><span class="cant">3</span> huevos (tortilla o cocidos)</li>
+              <li><span class="cant">1</span> lata de atún, al guiso o de acompañamiento</li>
+              <li>Verdura al guiso</li>
+            </ul>
+            <p class="tip">Olla grande de legumbre el domingo, raciones de 300 g, y tienes cena para 3 días.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="card extra" data-meal="extra">
+        <div class="info">
+          <p class="nombre">Extra +300 kcal</p>
+          <p class="macros">Solo si la báscula baja más de 0,5 kg/semana y no quieres perder: más aceite o 50 g más de avena.</p>
+        </div>
+        <button class="check" aria-pressed="false" aria-label="Marcar extra de 300 kcal">✓</button>
+      </article>
+    </div>
+
+    <section class="card semana" aria-label="Menú semanal">
+      <h2>El menú de la semana</h2>
+      <div class="sem-hoy" id="semHoy"></div>
+      <details>
+        <summary>Ver la semana entera</summary>
+        <div id="semLista"></div>
+        <p class="sem-pie">El batido cae todos los días y las cantidades son las de tu menú. Con "Mes pobre" cambia el pollo por 5 huevos + atún; con "Día de paga", por pechuga o ternera — la tabla de cambios está en la Guía.</p>
+      </details>
+    </section>
+  </div>
+
+  <!-- ============ ENTRENO ============ -->
+  <div class="pane" id="pane-entreno">
+    <p class="entreno-nota">Tus pesas se quedan como están — lo que define es el <b>cardio después del hierro</b> (nunca antes) y el doble de abs. El músculo que ya mueves es el que marca.</p>
+
+    <section class="card clip" style="padding:0" aria-label="Plan semanal">
+      <div id="listaDias"></div>
+    </section>
+
+    <section class="card cardio-card" aria-label="Cómo hacer el cardio">
+      <h2>El cardio, bien hecho</h2>
+      <p><b>Siempre después de las pesas</b>, a ritmo de poder hablar (cinta inclinada, bici o elíptica). No hace falta matarse: 20–25 min constantes queman grasa sin comerse tu fuerza. El sábado largo es el que más suma. Si un día vas justo de tiempo, salta el cardio, nunca las pesas.</p>
+    </section>
+  </div>
+
+  <!-- ============ BÁSCULA ============ -->
+  <div class="pane" id="pane-bascula">
+    <section class="card" aria-label="Báscula">
+      <h2>Báscula y cinta · 1 vez por semana</h2>
+      <div class="peso-form">
+        <input type="number" id="pesoInput" inputmode="decimal" step="0.1" min="40" max="200" placeholder="Peso · 85,0 kg" aria-label="Peso en kilos">
+        <input type="number" id="cinturaInput" inputmode="decimal" step="0.5" min="55" max="150" placeholder="Cintura · cm" aria-label="Cintura en centímetros">
+        <button id="pesoBtn">Apuntar</button>
+      </div>
+      <svg id="spark" viewBox="0 0 300 56" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <p id="veredicto">Apunta peso y cintura (a la altura del ombligo, sin meter tripa). En ayunas y siempre a la misma hora.</p>
+      <p id="cinturaNota"></p>
+      <ul id="historial"></ul>
+    </section>
+
+    <section class="card reglas" aria-label="Cómo leer la báscula">
+      <h2>Cómo saber que vas bien</h2>
+      <details>
+        <summary>La regla de oro de la recomposición</summary>
+        <p><b>Peso igual + cintura bajando + misma fuerza en el gym = ganando la partida.</b> La báscula no se mueve pero el espejo sí. Es lento: date 2–3 meses para verte el cambio de verdad, y 6 para el cambiazo.</p>
+      </details>
+      <details>
+        <summary>Si la cintura no baja en un mes</summary>
+        <p>Pasa al objetivo <b>Definir más (2.600 kcal)</b> un par de meses: quita 100 g de arroz cocido y 25 g de avena. La proteína ni tocarla.</p>
+      </details>
+      <details>
+        <summary>El cardio no da licencia para comer más</summary>
+        <p>Los 20 min de cinta son ~200 kcal. Ya están contados en tu objetivo — no los "recuperes" con extras o borras la definición del día.</p>
+      </details>
+    </section>
+  </div>
+
+  <!-- ============ GUÍA ============ -->
+  <div class="pane" id="pane-guia">
+    <section class="card reglas" aria-label="Reglas rápidas">
+      <h2>Reglas rápidas</h2>
+      <details>
+        <summary>La regla del plato (sin pesar)</summary>
+        <p>Arroz o legumbre = <b>un plato hondo lleno</b>. Carne = <b>una pieza como tu palma y algo más</b>. El batido no falla porque va medido de víspera.</p>
+      </details>
+      <details>
+        <summary>Cocinado vs crudo — no mezcles</summary>
+        <p>Todas las cantidades de esta app son <b>en cocinado</b>. Si un día pesas en crudo: el arroz triplica al cocerse (400 g cocido = 135 g crudo), la legumbre multiplica por 2,5 (300 g cocida = 120 g seca) y el pollo pierde un 30&nbsp;% (250 g cocinado = 350 g crudo con hueso).</p>
+      </details>
+      <details>
+        <summary>Cuánta proteína necesitas de verdad</summary>
+        <p>Con <b>150–170 g al día</b> vas servido (1,8–2 g por kilo) — y definiendo es aún más importante, porque es lo que protege el músculo. Más de ahí no suma: es dinero quemado.</p>
+      </details>
+      <details>
+        <summary>Para gastar lo mínimo</summary>
+        <p>Huevos y avena son la proteína y las calorías más baratas que existen. Contramuslo antes que pechuga. Legumbre seca antes que de bote. Marca blanca en todo. Este plan sale por <b>4–6 € al día</b>.</p>
+      </details>
+      <details>
+        <summary>Tabla de cambios (mismas kcal)</summary>
+        <p>Proteína: <b>250 g de pollo cocinado</b> = 5 huevos + 1 lata de atún = 300 g de picada magra cocinada = 250 g de pavo o pechuga.<br>
+        Carbohidrato: <b>400 g de arroz cocido</b> = 400 g de pasta cocida = 550 g de patata cocida = 130 g de pan.<br>
+        Legumbre: <b>300 g cocidos</b> de lentejas = garbanzos = alubias, tal cual.<br>
+        Fruta: <b>1 plátano</b> = 1 manzana grande = 2 mandarinas = 1 pera.<br>
+        Grasa: <b>30 g de crema de cacahuete</b> = 35 g de cacahuetes = 25 g de almendras = 1 chorro largo de aceite.</p>
+      </details>
+      <details>
+        <summary>Tus números</summary>
+        <p>20 años, 85 kg, 1,93 m, pesas 5 días + cardio: gasto total ~<b>3.100–3.200 kcal</b> (basal ~1.960). Comer 3.100 con 160 g de proteína = quedarte en 85 mientras cambias grasa por músculo. Definir más 2.600 · volumen 3.200.</p>
+      </details>
+    </section>
+
+    <section class="card compra" aria-label="Lista de la compra">
+      <h2>La compra de la semana</h2>
+      <ul id="listaCompra"></ul>
+      <p class="nota" id="notaCompra">Precios orientativos de marca blanca.</p>
+    </section>
+
+    <footer>Orientación general de nutrición y entreno, no consejo médico. Los datos se guardan solo en este móvil.</footer>
+  </div>
+</main>
+
+<nav class="tabs" aria-label="Secciones">
+  <div class="inner">
+    <button data-pane="hoy" aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.2 3.2 5.5 5.3 5.5 9.7a5.5 5.5 0 1 1-11 0c0-2.2 1.1-3.9 2.2-5.5.6 1.2 1.6 2.1 3 2.3-.6-2.2-.9-4.4.3-6.5Z"/></svg>
+      Hoy
+    </button>
+    <button data-pane="entreno" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 12h9"/><rect x="4.5" y="7.5" width="3" height="9" rx="1"/><rect x="16.5" y="7.5" width="3" height="9" rx="1"/><path d="M2.5 10v4M21.5 10v4"/></svg>
+      Entreno
+    </button>
+    <button data-pane="bascula" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 10a5.5 5.5 0 0 1 8 0"/><path d="M12 12.5 14 9"/></svg>
+      Báscula
+    </button>
+    <button data-pane="guia" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6.5h12M8.5 12h12M8.5 17.5h12"/><path d="M3.5 6.5h.01M3.5 12h.01M3.5 17.5h.01"/></svg>
+      Guía
+    </button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  "use strict";
+  var REDUCE = false;
+  try{ REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
+
+  /* ================= INTRO DE PÍXELES ================= */
+  (function intro(){
+    var el = document.getElementById("intro");
+    function done(){
+      if(el && el.parentNode){ el.parentNode.removeChild(el); }
+      document.body.classList.add("ready");
+    }
+    // red de seguridad: pase lo que pase, la app se muestra
+    setTimeout(function(){ document.body.classList.add("ready"); }, 4000);
+    if(REDUCE || !el){ done(); return; }
+    var cv = document.getElementById("introCv");
+    var ctx, W, H, DPR, intentos = 0;
+    try{ ctx = cv.getContext("2d"); }catch(e){ done(); return; }
+    function medir(){
+      DPR = Math.min(2, window.devicePixelRatio || 1);
+      W = window.innerWidth; H = window.innerHeight;
+      if(W < 50 || H < 50) return false;
+      cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      return true;
+    }
+
+    var COLORES = ["#8FA2FF","#5B76FF","#3CC993","#EAEDF8","#8FA2FF","#3CC993"];
+    var parts = [];
+    var T1 = 1150, T2 = 2150, T3 = 2750;
+    var start = 0, raf = 0, burstDone = false, subOn = false, outOn = false;
+
+    function build(){
+      var off = document.createElement("canvas");
+      var fs = Math.min(150, Math.round(W*0.40));
+      off.width = W; off.height = Math.round(fs*1.3);
+      var oc = off.getContext("2d");
+      oc.fillStyle = "#fff";
+      oc.textAlign = "center"; oc.textBaseline = "middle";
+      oc.font = "900 "+fs+'px Archivo, "Arial Black", Arial, sans-serif';
+      oc.fillText("JOEL", W/2, off.height/2);
+      var data;
+      try{ data = oc.getImageData(0,0,off.width,off.height).data; }catch(e){ return false; }
+      var step = 3;
+      var puntos = [];
+      for(var y=0; y<off.height; y+=step){
+        for(var x=0; x<off.width; x+=step){
+          if(data[(y*off.width+x)*4+3] > 128){ puntos.push([x,y]); }
+        }
+      }
+      if(puntos.length===0) return false;
+      while(puntos.length > 2200){
+        puntos.splice(Math.floor(Math.random()*puntos.length),1);
+      }
+      var oy = H/2 - off.height/2;
+      for(var i=0;i<puntos.length;i++){
+        var lado = Math.floor(Math.random()*4);
+        var sx = lado===0 ? -20 : lado===1 ? W+20 : Math.random()*W;
+        var sy = lado===2 ? -20 : lado===3 ? H+20 : Math.random()*H;
+        parts.push({
+          x:sx, y:sy,
+          tx:puntos[i][0], ty:puntos[i][1]+oy,
+          d:Math.random()*380,
+          c:COLORES[Math.floor(Math.random()*COLORES.length)],
+          s:Math.random()<0.18 ? 3.4 : 2.4,
+          vx:0, vy:0
+        });
+      }
+      return true;
+    }
+
+    function frame(now){
+      var t = now - start;
+      ctx.clearRect(0,0,W,H);
+      var i, p;
+      if(t < T2){
+        for(i=0;i<parts.length;i++){
+          p = parts[i];
+          if(t > p.d){
+            p.x += (p.tx-p.x)*0.09;
+            p.y += (p.ty-p.y)*0.09;
+          }
+          ctx.globalAlpha = t < T1 ? 1 : 0.82 + 0.18*Math.sin(t*0.012 + i);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(p.x, p.y, p.s, p.s);
+        }
+        ctx.globalAlpha = 1;
+        if(!subOn && t > 950){ subOn = true; document.getElementById("introSub").classList.add("on"); }
+      } else {
+        if(!burstDone){
+          burstDone = true;
+          var cx = W/2, cy = H/2;
+          for(i=0;i<parts.length;i++){
+            p = parts[i];
+            p.vx = (p.x-cx)*0.03*(0.4+Math.random()) + (Math.random()-0.5)*7;
+            p.vy = (p.y-cy)*0.03*(0.4+Math.random()) + (Math.random()-0.5)*7 - 2;
+          }
+        }
+        var fade = Math.max(0, 1-(t-T2)/500);
+        for(i=0;i<parts.length;i++){
+          p = parts[i];
+          p.x += p.vx; p.y += p.vy; p.vy += 0.22;
+          ctx.globalAlpha = fade;
+          ctx.fillStyle = p.c;
+          ctx.fillRect(p.x, p.y, p.s, p.s);
+        }
+        ctx.globalAlpha = 1;
+        if(!outOn && t > T2+180){ outOn = true; el.classList.add("out"); document.body.classList.add("ready"); }
+        if(t > T3){ cancelAnimationFrame(raf); done(); return; }
+      }
+      raf = requestAnimationFrame(frame);
+    }
+
+    function go(){
+      if(start || !el.parentNode) return;
+      if(!medir()){
+        // el visor puede tardar en medirse; reintentar un poco antes de rendirse
+        if(intentos++ < 4){ setTimeout(go, 300); } else { done(); }
+        return;
+      }
+      if(!build()){ done(); return; }
+      start = performance.now();
+      raf = requestAnimationFrame(frame);
+    }
+    el.addEventListener("pointerdown", function(){
+      // saltar al estallido
+      if(!start){ done(); return; }
+      var t = performance.now() - start;
+      if(t < T2){ start = performance.now() - T2; }
+    });
+    try{
+      if(document.fonts && document.fonts.load){
+        document.fonts.load('900 120px Archivo').then(go, go);
+        setTimeout(go, 450);
+      } else { go(); }
+    }catch(e){ go(); }
+  })();
+
+  /* ================= APP ================= */
+  var KEY = "modo-animal-v1";
+  var MEALS = { batido:{kcal:950,prot:35}, comida:{kcal:1100,prot:60}, cena:{kcal:1050,prot:65}, extra:{kcal:300,prot:0} };
+  var GOALS = { rec:{kcal:3100}, def:{kcal:2600}, vol:{kcal:3200} };
+  var PROT_META = 160;
+  var RING_C = 389.6;
+  var MENUS = {
+    pobre: {
+      frase: "Fin de mes: la cartera está en los huesos. Tú, cada día menos.",
+      batido: {
+        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","plátano (el de la oferta, magullado vale igual)"],["35 g","de cacahuetes de bolsa"]],
+        tip: "La crema de cacahuete se hace masticando: el cacahuete a granel cuesta la mitad y es lo mismo. Batido de víspera igual que siempre."
+      },
+      comida: {
+        items: [["400 g","de arroz cocido"],["5","huevos (tortilla, revueltos o cocidos)"],["2","latas de atún"],["","Verdura congelada + chorro de aceite"]],
+        tip: "El huevo es la proteína más barata del planeta. Cinco huevos y dos latas = el pollo que no has comprado, por la mitad."
+      },
+      cena: {
+        items: [["350 g","de lentejas o garbanzos cocidos"],["200 g","de arroz cocido (dentro del guiso, tipo lentejas con arroz)"],["3","huevos"],["","Verdura al guiso + chorro de aceite"]],
+        tip: "Lentejas con arroz: receta de abuela y de culturista a la vez — juntas hacen proteína completa."
+      },
+      compra: [
+        ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 5 docenas","11,00 €"],
+        ["Arroz 2 kg","2,20 €"],["Lentejas o garbanzos secos 1 kg","1,90 €"],["Atún, pack 12 latas","8,00 €"],
+        ["Plátanos 2 kg","3,60 €"],["Cacahuetes 500 g","2,00 €"],["Verdura congelada 2 kg","3,00 €"],["Aceite de oliva 1 L","4,80 €"]
+      ],
+      nota: "Precios orientativos de marca blanca. Semana por ~26–30 € (los packs grandes duran más de una). El músculo no mira el ticket."
+    },
+    medio: {
+      frase: "El clásico del obrero: contramuslos, potaje y a crecer sin arruinarse.",
+      batido: {
+        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","plátano"],["30 g","de crema de cacahuete (1 cucharada colmada)"],["","Opcional: cacao puro para el sabor"]],
+        tip: "Batido la noche anterior y a la nevera: la avena se ablanda y queda más fino. Hazlo cada noche, no para varios días. Nada de huevo crudo — si quieres más proteína, un yogur o leche en polvo."
+      },
+      comida: {
+        items: [["400 g","de arroz cocido (un plato hondo lleno, sin colmar)"],["250 g","de contramuslo de pollo ya cocinado y sin hueso (~350 g en crudo con hueso)"],["","Verdura congelada, la que quieras"],["1 chorro","de aceite de oliva (~10 ml)"]],
+        tip: "Si es carne picada: no es lo mismo que el pollo (250–270 kcal/100 g frente a 165). Cómprala con menos de 10 % de grasa o baja la ración a 300 g."
+      },
+      cena: {
+        items: [["300 g","de lentejas o garbanzos cocidos (plato hondo, o 3/4 de bote grande escurrido)"],["3","huevos (tortilla o cocidos)"],["1","lata de atún, al guiso o de acompañamiento"],["","Verdura al guiso"]],
+        tip: "Olla grande de legumbre el domingo, raciones de 300 g, y tienes cena para 3 días."
+      },
+      compra: [
+        ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 2 docenas","4,60 €"],
+        ["Arroz 1 kg","1,10 €"],["Contramuslos de pollo 2 kg","9,00 €"],["Lentejas o garbanzos secos 1 kg","1,90 €"],
+        ["Atún, pack 6 latas","4,20 €"],["Plátanos 2 kg","3,60 €"],["Crema de cacahuete 500 g","2,60 €"],
+        ["Verdura congelada 2 kg","3,00 €"],["Aceite de oliva 1 L","4,80 €"]
+      ],
+      nota: "Precios orientativos de marca blanca. La cesta entera da para toda la semana: ~30–38 €."
+    },
+    paga: {
+      frase: "Has cobrado, animal. Hoy la proteína no pide perdón.",
+      batido: {
+        items: [["80 g","de avena"],["400 ml","de leche entera"],["1","plátano"],["25 g","de crema de cacahuete"],["1","yogur griego dentro del batido (cremoso nivel dios)"]],
+        tip: "Mismo batido pero con percha: el yogur griego mete proteína extra y lo deja como de cafetería de gimnasio."
+      },
+      comida: {
+        items: [["400 g","de arroz o pasta cocidos"],["250 g","de pechuga a la plancha o ternera magra (cocinada)"],["","Verdura, la que quieras"],["1 chorro","de aceite de oliva"]],
+        tip: "La pechuga es el lujo silencioso: más proteína por bocado y casi cero grasa. Hoy comes como los de los reels."
+      },
+      cena: {
+        items: [["300 g","de garbanzos o lentejas cocidos"],["200 g","de picada magra cocinada o 1 lata grande de salmón"],["2","huevos"],["","Verdura al guiso"]],
+        tip: "Potaje con picada o salmón: el omega-3 también levanta pesas."
+      },
+      compra: [
+        ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 1 docena","2,40 €"],
+        ["Arroz y pasta, 2 kg","2,30 €"],["Pechuga de pollo 1,5 kg","10,90 €"],["Ternera o picada magra 1 kg","8,50 €"],
+        ["Salmón, 3 latas grandes","5,40 €"],["Garbanzos o lentejas secos 1 kg","1,90 €"],["Yogur griego, pack 8","2,80 €"],
+        ["Plátanos 2 kg","3,60 €"],["Crema de cacahuete 500 g","2,60 €"],["Verdura congelada 2 kg","3,00 €"],["Aceite de oliva 1 L","4,80 €"]
+      ],
+      nota: "Precios orientativos. Semana por ~52–56 €: mismos números, mejor percha. Resérvalo para la semana después de cobrar."
+    }
+  };
+  var SEMANA = [
+    {dow:1, letra:"L", comida:"Arroz + contramuslos (los del horno del domingo)", cena:"Lentejas con arroz + 3 huevos (la olla ya está hecha)", nota:null},
+    {dow:2, letra:"M", comida:"Pasta con atún y tomate (2 latas)", cena:"Lentejas + tortilla de 3 huevos", nota:null},
+    {dow:3, letra:"X", comida:"Arroz + pollo (última tanda del horno)", cena:"Lentejas (última ración) + lata de atún + 2 huevos", nota:null},
+    {dow:4, letra:"J", comida:"Patata asada o cocida + 4 huevos a la plancha + lata de atún", cena:"Garbanzos salteados con verdura + huevo duro", nota:null},
+    {dow:5, letra:"V", comida:"Macarrones con picada magra y tomate — el plato premio", cena:"Tortilla de patata (cocida, no frita) + lata de atún", nota:null},
+    {dow:6, letra:"S", comida:"Libre con cabeza: un plato social (pizza, hamburguesa…), no un buffet", cena:"Vuelta al plan: legumbre + 3 huevos", nota:"Un plato libre a la semana no rompe nada; siete sí."},
+    {dow:0, letra:"D", comida:"Arroz + pollo al horno (asa bandeja entera: te da para 2 días)", cena:"Garbanzos con verdura + lata de atún", nota:"Día de olla: lentejas para 3 noches, arroz para 2 días y batido de víspera."}
+  ];
+  var PLAN = [
+    {dow:1, letra:"L", grupos:"Espalda + Bíceps", series:"5 espalda × 4 series · 3 bíceps × 4", cardio:"Cardio 20 min", abs:null},
+    {dow:2, letra:"M", grupos:"Pecho + Tríceps", series:"4–5 pecho × 4 · 3 tríceps × 4", cardio:null, abs:"Abs 4 series"},
+    {dow:3, letra:"X", grupos:"Hombro", series:"4 hombro × 4", cardio:"Cardio 25 min", abs:null},
+    {dow:4, letra:"J", grupos:"Bíceps + Tríceps", series:"3 bíceps × 4 · 2 tríceps × 4", cardio:null, abs:"Abs 4 series"},
+    {dow:5, letra:"V", grupos:"Pierna", series:"5 pierna × 4", cardio:"Cardio 10–15 min suave", abs:null},
+    {dow:6, letra:"S", grupos:"Cardio largo + Abs", series:"El día de quemar", cardio:"40 min: cuesta, trote o bici", abs:"Abs 4 series"},
+    {dow:0, letra:"D", grupos:"Descanso", series:"Paseo tranquilo o sofá — creces descansando", cardio:null, abs:null, off:true}
+  ];
+
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  var st = load();
+  if(!st.goal || st.goal==="man") st.goal = "rec";
+  if(!GOALS[st.goal]) st.goal = "rec";
+  if(!st.days) st.days = {};
+  if(!st.weights) st.weights = [];
+  if(!st.waists) st.waists = [];
+  if(!st.menu || !MENUS[st.menu]) st.menu = "medio";
+  if(!st.shop2){
+    st.shop2 = {pobre:{}, medio:{}, paga:{}};
+    if(st.shop) st.shop2.medio = st.shop; // migrar la lista antigua
+  }
+
+  function pad(n){ return (n<10?"0":"")+n; }
+  function hoyKey(){ var d=new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function dia(){ if(!st.days[hoyKey()]) st.days[hoyKey()]={}; return st.days[hoyKey()]; }
+  function fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,"."); }
+
+  var DIAS=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  var MESES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  function renderFecha(){
+    var d = new Date();
+    document.getElementById("fecha").textContent = DIAS[d.getDay()]+", "+d.getDate()+" de "+MESES[d.getMonth()];
+  }
+  renderFecha();
+
+  // ---- números animados ----
+  function animNum(elm, to){
+    var from = parseInt(elm.getAttribute("data-v")||"0",10);
+    elm.setAttribute("data-v", String(to));
+    if(REDUCE || from===to){ elm.textContent = fmt(to); return; }
+    var t0 = performance.now(), dur = 450;
+    function step(now){
+      var k = Math.min(1,(now-t0)/dur);
+      k = 1-Math.pow(1-k,3);
+      elm.textContent = fmt(Math.round(from+(to-from)*k));
+      if(k<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ---- explosión de píxeles en un botón ----
+  function pixelBurst(btn){
+    if(REDUCE) return;
+    var cols = ["pb","pa","pc","pb"];
+    for(var i=0;i<12;i++){
+      var s = document.createElement("span");
+      s.className = "px "+cols[i%cols.length];
+      var ang = Math.random()*Math.PI*2;
+      var dist = 26+Math.random()*30;
+      s.style.setProperty("--dx", Math.round(Math.cos(ang)*dist)+"px");
+      s.style.setProperty("--dy", Math.round(Math.sin(ang)*dist)+"px");
+      s.addEventListener("animationend", function(){ if(this.parentNode) this.parentNode.removeChild(this); });
+      btn.appendChild(s);
+    }
+  }
+
+  // ---- pestañas ----
+  var hero = document.getElementById("hero");
+  var navBtns = document.querySelectorAll("nav.tabs button");
+  navBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = b.getAttribute("data-pane");
+      navBtns.forEach(function(x){ x.setAttribute("aria-pressed", x===b ? "true":"false"); });
+      document.querySelectorAll(".pane").forEach(function(p){
+        p.classList.toggle("activa", p.id === "pane-"+id);
+      });
+      hero.classList.toggle("mini", id!=="hoy");
+      window.scrollTo(0,0);
+    });
+  });
+
+  // ---- comidas ----
+  var cards = document.querySelectorAll("[data-meal]");
+  cards.forEach(function(card){
+    var id = card.getAttribute("data-meal");
+    var btn = card.querySelector(".check");
+    btn.addEventListener("click", function(){
+      var d = dia(); d[id] = !d[id];
+      if(d[id]) pixelBurst(btn);
+      save(); render();
+    });
+  });
+
+  // ---- objetivo ----
+  var chips = document.querySelectorAll(".chip[data-goal]");
+  chips.forEach(function(ch){
+    ch.addEventListener("click", function(){ st.goal = ch.getAttribute("data-goal"); save(); render(); });
+  });
+
+  // ---- menú según la cartera ----
+  var menuChips = document.querySelectorAll(".chip[data-menu]");
+  menuChips.forEach(function(ch){
+    ch.addEventListener("click", function(){ st.menu = ch.getAttribute("data-menu"); save(); renderMenu(); });
+  });
+  function renderMenu(){
+    var m = MENUS[st.menu];
+    menuChips.forEach(function(ch){
+      ch.setAttribute("aria-pressed", ch.getAttribute("data-menu")===st.menu ? "true":"false");
+    });
+    document.getElementById("menuFrase").textContent = m.frase;
+    ["batido","comida","cena"].forEach(function(id){
+      var card = document.querySelector('[data-meal="'+id+'"]');
+      var ul = card.querySelector(".detalle ul");
+      ul.innerHTML = "";
+      m[id].items.forEach(function(it){
+        var li = document.createElement("li");
+        if(it[0]){
+          var b = document.createElement("span"); b.className="cant"; b.textContent = it[0];
+          li.appendChild(b);
+          li.appendChild(document.createTextNode(" "+it[1]));
+        } else {
+          li.textContent = it[1];
+        }
+        ul.appendChild(li);
+      });
+      card.querySelector(".tip").textContent = m[id].tip;
+    });
+    buildCompra(m.compra, m.nota);
+  }
+
+  // ---- plan de entreno ----
+  var listaDias = document.getElementById("listaDias");
+  function buildPlan(){
+  listaDias.innerHTML = "";
+  var hoyDow = new Date().getDay();
+  PLAN.forEach(function(p){
+    var esHoy = p.dow === hoyDow;
+    var row = document.createElement("div");
+    row.className = "dia"+(esHoy?" hoy":"");
+    var letra = document.createElement("div"); letra.className="letra"; letra.textContent=p.letra;
+    var info = document.createElement("div"); info.className="info";
+    var g = document.createElement("p"); g.className="grupos"; g.textContent=p.grupos;
+    var s = document.createElement("p"); s.className="series"; s.textContent=p.series;
+    info.appendChild(g); info.appendChild(s);
+    if(p.cardio || p.abs || p.off){
+      var tags = document.createElement("div"); tags.className="tags";
+      if(p.cardio){ var t1=document.createElement("span"); t1.className="tag cardio"; t1.textContent=p.cardio; tags.appendChild(t1); }
+      if(p.abs){ var t2=document.createElement("span"); t2.className="tag abs"; t2.textContent=p.abs; tags.appendChild(t2); }
+      if(p.off){ var t3=document.createElement("span"); t3.className="tag off"; t3.textContent="Sin gym"; tags.appendChild(t3); }
+      info.appendChild(tags);
+    }
+    row.appendChild(letra); row.appendChild(info);
+    if(esHoy && !p.off){
+      var btn = document.createElement("button");
+      btn.className="check"; btn.textContent="✓";
+      btn.setAttribute("aria-label","Marcar entreno de hoy como hecho");
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){
+        var d = dia(); d.entreno = !d.entreno;
+        if(d.entreno) pixelBurst(btn);
+        save(); render();
+      });
+      btn.id="checkEntreno";
+      row.appendChild(btn);
+    }
+    listaDias.appendChild(row);
+  });
+  }
+  buildPlan();
+
+  // ---- menú semanal ----
+  function renderSemana(){
+    var dow = new Date().getDay();
+    var hoy = null;
+    var cont = document.getElementById("semLista");
+    cont.innerHTML = "";
+    SEMANA.forEach(function(s){
+      if(s.dow===dow) hoy = s;
+      var row = document.createElement("div");
+      row.className = "sem-dia"+(s.dow===dow?" hoy":"");
+      var l = document.createElement("span"); l.className="sem-letra"; l.textContent=s.letra;
+      var t = document.createElement("div"); t.className="sem-txt";
+      var pc = document.createElement("p");
+      var bc = document.createElement("b"); bc.textContent="Comida: ";
+      pc.appendChild(bc); pc.appendChild(document.createTextNode(s.comida));
+      var pn = document.createElement("p");
+      var bn = document.createElement("b"); bn.textContent="Cena: ";
+      pn.appendChild(bn); pn.appendChild(document.createTextNode(s.cena));
+      t.appendChild(pc); t.appendChild(pn);
+      if(s.nota){ var no = document.createElement("p"); no.className="nota"; no.textContent=s.nota; t.appendChild(no); }
+      row.appendChild(l); row.appendChild(t);
+      cont.appendChild(row);
+    });
+    var sh = document.getElementById("semHoy");
+    sh.innerHTML = "";
+    if(hoy){
+      var p1 = document.createElement("p");
+      var b1 = document.createElement("b"); b1.textContent="Hoy toca — ";
+      p1.appendChild(b1);
+      p1.appendChild(document.createTextNode("Comida: "+hoy.comida+". Cena: "+hoy.cena));
+      sh.appendChild(p1);
+      if(hoy.nota){ var p2 = document.createElement("p"); p2.className="sem-nota"; p2.textContent=hoy.nota; sh.appendChild(p2); }
+    }
+  }
+  renderSemana();
+
+  // ---- báscula ----
+  var inpPeso = document.getElementById("pesoInput");
+  var inpCint = document.getElementById("cinturaInput");
+  document.getElementById("pesoBtn").addEventListener("click", function(){
+    var k = hoyKey(); var hecho=false;
+    var vp = parseFloat(String(inpPeso.value).replace(",","."));
+    if(vp && vp>=40 && vp<=200){
+      vp = Math.round(vp*10)/10;
+      st.weights = st.weights.filter(function(w){ return w.d!==k; });
+      st.weights.push({d:k, kg:vp});
+      st.weights.sort(function(a,b){ return a.d<b.d?-1:1; });
+      inpPeso.value=""; hecho=true;
+    }
+    var vc = parseFloat(String(inpCint.value).replace(",","."));
+    if(vc && vc>=55 && vc<=150){
+      vc = Math.round(vc*2)/2;
+      st.waists = st.waists.filter(function(w){ return w.d!==k; });
+      st.waists.push({d:k, cm:vc});
+      st.waists.sort(function(a,b){ return a.d<b.d?-1:1; });
+      inpCint.value=""; hecho=true;
+    }
+    if(!hecho){ inpPeso.focus(); return; }
+    save(); render();
+  });
+
+  function ritmoSemanal(){
+    var w = st.weights;
+    if(w.length<2) return null;
+    var last = w[w.length-1];
+    var ref = w[0];
+    for(var i=w.length-2;i>=0;i--){
+      var dd = (new Date(last.d) - new Date(w[i].d))/864e5;
+      if(dd>=10){ ref=w[i]; break; }
+      ref = w[i];
+    }
+    var dias = (new Date(last.d)-new Date(ref.d))/864e5;
+    if(dias<5) return {pocos:true};
+    return {kgSem:(last.kg-ref.kg)/(dias/7)};
+  }
+
+  function veredicto(){
+    var el = document.getElementById("veredicto");
+    el.className="";
+    if(st.weights.length===0 && st.waists.length===0){
+      el.textContent="Apunta peso y cintura (a la altura del ombligo, sin meter tripa). En ayunas y siempre a la misma hora.";
+      return;
+    }
+    var r = ritmoSemanal();
+    if(!r){ el.textContent="Apuntado. Con el segundo registro (dale unos días) te digo si vas bien."; return; }
+    if(r.pocos){ el.textContent="Necesito pesos con al menos una semana entre medias para calcular el ritmo. Sigue apuntando."; return; }
+    var v = Math.round(r.kgSem*100)/100;
+    var txt = (v>0?"+":"")+String(v).replace(".",",")+" kg/semana. ";
+    if(st.goal==="rec"){
+      if(Math.abs(v)<=0.25){ el.className="good"; el.textContent=txt+"Peso clavado en 85 — justo el plan. Ahora la que manda es la cintura."; }
+      else if(v>0.25){ el.className="warn"; el.textContent=txt+"Estás subiendo: recorta un poco el arroz o suma un día de cardio."; }
+      else if(v>=-0.5){ el.textContent=txt+"Bajando suave — no es malo si aún te sobra grasa, pero vigila no perder fuerza."; }
+      else { el.className="bad"; el.textContent=txt+"Bajas demasiado rápido y ahí se va músculo. Activa el Extra de +300."; }
+    } else if(st.goal==="def"){
+      if(v>-0.2){ el.className="warn"; el.textContent=txt+"No bajas: quita 50 g de avena o parte del arroz."; }
+      else if(v>=-0.7){ el.className="good"; el.textContent=txt+"Bajando a buen ritmo sin perder músculo. Mantén la proteína alta."; }
+      else { el.className="bad"; el.textContent=txt+"Bajas demasiado rápido y ahí se va músculo. Come un poco más."; }
+    } else {
+      if(v<0.15){ el.className="warn"; el.textContent=txt+"La báscula no sube: activa el Extra de +300 kcal."; }
+      else if(v<=0.5){ el.className="good"; el.textContent=txt+"Ritmo perfecto para ganar músculo sin engordar."; }
+      else { el.className="bad"; el.textContent=txt+"Subes demasiado rápido — eso ya es grasa. Recorta arroz o avena."; }
+    }
+  }
+
+  function notaCintura(){
+    var el = document.getElementById("cinturaNota");
+    el.className=""; el.textContent="";
+    var w = st.waists;
+    if(w.length<2) return;
+    var dif = Math.round((w[w.length-1].cm - w[0].cm)*10)/10;
+    if(dif<=-0.5){ el.className="good"; el.textContent="Cintura: "+String(dif).replace(".",",")+" cm desde que empezaste. Eso es definición de verdad."; }
+    else if(dif>=1){ el.textContent="Cintura: +"+String(dif).replace(".",",")+" cm. Si sigue así en 2 semanas, pásate a Definir más."; }
+    else { el.textContent="Cintura estable. La recomposición es lenta: sigue y compara por meses, no por semanas."; }
+  }
+
+  function sparkline(){
+    var svg = document.getElementById("spark");
+    var w = st.weights.slice(-10);
+    if(w.length<2){ svg.style.display="none"; return; }
+    svg.style.display="block";
+    var min=Infinity,max=-Infinity;
+    w.forEach(function(p){ if(p.kg<min)min=p.kg; if(p.kg>max)max=p.kg; });
+    if(max-min<1){ var mid=(max+min)/2; min=mid-0.5; max=mid+0.5; }
+    var pts = w.map(function(p,i){
+      var x = 6 + i*(288/(w.length-1));
+      var y = 50 - ((p.kg-min)/(max-min))*44;
+      return [Math.round(x*10)/10, Math.round(y*10)/10];
+    });
+    var line = pts.map(function(p){ return p[0]+","+p[1]; }).join(" ");
+    var end = pts[pts.length-1];
+    svg.innerHTML = '<polyline points="'+line+'"></polyline><circle cx="'+end[0]+'" cy="'+end[1]+'" r="4"></circle>';
+  }
+
+  function historial(){
+    var ul = document.getElementById("historial");
+    ul.innerHTML="";
+    var cmPorDia = {};
+    st.waists.forEach(function(p){ cmPorDia[p.d]=p.cm; });
+    st.weights.slice(-6).reverse().forEach(function(p){
+      var parts = p.d.split("-");
+      var li = document.createElement("li");
+      var f = document.createElement("span");
+      f.textContent = parseInt(parts[2],10)+" de "+MESES[parseInt(parts[1],10)-1];
+      var k = document.createElement("span");
+      k.className="num";
+      k.textContent = String(p.kg).replace(".",",")+" kg";
+      if(cmPorDia[p.d]){
+        var c = document.createElement("span"); c.className="cm";
+        c.textContent = " · "+String(cmPorDia[p.d]).replace(".",",")+" cm";
+        k.appendChild(c);
+      }
+      li.appendChild(f); li.appendChild(k);
+      ul.appendChild(li);
+    });
+  }
+
+  // ---- lista de la compra (depende del menú) ----
+  var lista = document.getElementById("listaCompra");
+  function buildCompra(items, nota){
+    lista.innerHTML = "";
+    items.forEach(function(item,i){
+      var li=document.createElement("li");
+      var b=document.createElement("button");
+      b.className="cbx"; b.textContent="✓"; b.setAttribute("aria-label","Marcar "+item[0]);
+      var t=document.createElement("span"); t.className="txt"; t.textContent=item[0];
+      var p=document.createElement("span"); p.className="precio"; p.textContent=item[1];
+      b.addEventListener("click",function(){
+        var s = st.shop2[st.menu];
+        s[i] = !s[i];
+        save(); renderCompra();
+      });
+      li.appendChild(b); li.appendChild(t); li.appendChild(p);
+      lista.appendChild(li);
+    });
+    document.getElementById("notaCompra").textContent = nota;
+    renderCompra();
+  }
+  function renderCompra(){
+    var s = st.shop2[st.menu] || {};
+    var lis=lista.children;
+    for(var i=0;i<lis.length;i++){
+      var done = !!s[i];
+      lis[i].setAttribute("data-done", done?"1":"0");
+      lis[i].querySelector(".cbx").setAttribute("aria-pressed", done?"true":"false");
+    }
+  }
+
+  // ---- render general ----
+  function render(){
+    var d = dia();
+    var kcal=0, prot=0;
+    cards.forEach(function(card){
+      var id=card.getAttribute("data-meal");
+      var on=!!d[id];
+      card.querySelector(".check").setAttribute("aria-pressed", on?"true":"false");
+      card.classList.toggle("hecha", on);
+      if(on){ kcal+=MEALS[id].kcal; prot+=MEALS[id].prot; }
+    });
+    var meta = GOALS[st.goal].kcal;
+    animNum(document.getElementById("kcalNum"), kcal);
+    animNum(document.getElementById("protNum"), prot);
+    document.getElementById("kcalMeta").textContent = fmt(meta);
+    document.getElementById("kcalPct").textContent = Math.round(Math.min(100, kcal/meta*100))+"%";
+    var frac = Math.min(1, kcal/meta);
+    document.getElementById("ringProg").style.strokeDashoffset = String(RING_C*(1-frac));
+    document.getElementById("protBar").style.width = Math.min(100, prot/PROT_META*100)+"%";
+
+    chips.forEach(function(ch){
+      ch.setAttribute("aria-pressed", ch.getAttribute("data-goal")===st.goal ? "true":"false");
+    });
+
+    var be = document.getElementById("checkEntreno");
+    if(be) be.setAttribute("aria-pressed", d.entreno ? "true":"false");
+
+    var msg = document.getElementById("msgHoy");
+    var falta = meta-kcal;
+    var pend = [];
+    if(!d.batido) pend.push("el batido");
+    if(!d.comida) pend.push("la comida");
+    if(!d.cena) pend.push("la cena");
+    if(kcal>meta+200){
+      msg.innerHTML = "Te has pasado en <strong>"+fmt(kcal-meta)+" kcal</strong> — mañana sin Extra y cardio completo.";
+    } else if(falta<=0){
+      msg.innerHTML = "<strong>Día completado.</strong> A dormir bien, que ahí es donde se marca.";
+    } else if(pend.length===0){
+      msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — hoy toca el Extra o un puñado más de lo que sea.";
+    } else {
+      msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — te queda"+(pend.length>1?"n":"")+" "+pend.join(", ")+".";
+    }
+
+    veredicto(); notaCintura(); sparkline(); historial(); renderCompra();
+  }
+
+  renderMenu();
+  render();
+
+  // ---- cambio de día: en iPhone la app resucita de memoria días después ----
+  var claveDia = hoyKey();
+  function comprobarDia(){
+    if(hoyKey() !== claveDia){
+      claveDia = hoyKey();
+      renderFecha(); buildPlan(); renderSemana(); render();
+    }
+  }
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) comprobarDia(); });
+  window.addEventListener("pageshow", comprobarDia);
+  window.addEventListener("focus", comprobarDia);
+  setInterval(comprobarDia, 30000);
+
+  /* ================= AMBIENTE DEL HERO ================= */
+  (function ambiente(){
+    if(REDUCE) return;
+    var cv = document.getElementById("heroCv");
+    var ctx, W, H, DPR, parts=[], f=0, raf=0, activo=true;
+    try{ ctx = cv.getContext("2d"); }catch(e){ return; }
+    function fit(){
+      DPR = Math.min(2, window.devicePixelRatio || 1);
+      var r = hero.getBoundingClientRect();
+      W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
+      cv.width = W*DPR; cv.height = H*DPR;
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+    }
+    fit();
+    var cols = ["#8FA2FF","#3CC993","#F2F4FF"];
+    for(var i=0;i<34;i++){
+      parts.push({ x:Math.random()*W, y:Math.random()*H, v:0.12+Math.random()*0.35,
+                   s:1+Math.random()*1.8, a:Math.random()*6.28, c:cols[i%cols.length] });
+    }
+    function loop(){
+      raf = requestAnimationFrame(loop);
+      f++;
+      if(f%2) return;
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<parts.length;i++){
+        var p = parts[i];
+        p.y -= p.v;
+        if(p.y < -4){ p.y = H+4; p.x = Math.random()*W; }
+        ctx.globalAlpha = 0.16 + 0.22*(0.5+0.5*Math.sin(f*0.02+p.a));
+        ctx.fillStyle = p.c;
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+      }
+      ctx.globalAlpha = 1;
+    }
+    loop();
+    document.addEventListener("visibilitychange", function(){
+      if(document.hidden){ cancelAnimationFrame(raf); activo=false; }
+      else if(!activo){ activo=true; loop(); }
+    });
+    window.addEventListener("resize", fit);
+  })();
+})();
+</script>
+
+</body>
+</html>
