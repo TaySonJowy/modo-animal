@@ -202,50 +202,28 @@
     color:var(--protein); font-size:.85rem; font-weight:600;
   }
 
-  /* ---- explicaciones fáciles (modo "explícamelo como si tuviera 5 años") ---- */
-  .explica{
-    background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:15px 16px;
-    box-shadow:var(--shadow);
-  }
-  .explica h3{
-    font-family:"Chakra Petch",system-ui,sans-serif; font-size:.74rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--accent); margin:0 0 8px; font-weight:700; display:flex; align-items:center; gap:8px;
-  }
-  .explica h3::before{content:""; width:8px; height:8px; background:var(--accent); flex:none; box-shadow:0 0 8px var(--glow)}
-  .explica p{margin:0 0 9px; font-size:.96rem; color:var(--ink); line-height:1.55}
-  .explica p:last-child{margin-bottom:0}
-  .explica .peque{font-size:.85rem; color:var(--ink-soft)}
-  .explica .grande{font-size:1.05rem; font-weight:700}
-  ol.pasos{margin:0 0 9px; padding:0; list-style:none; counter-reset:paso; display:flex; flex-direction:column; gap:10px}
-  ol.pasos:last-child{margin-bottom:0}
-  ol.pasos li{counter-increment:paso; position:relative; padding-left:38px; font-size:.96rem; color:var(--ink); line-height:1.45}
-  ol.pasos li::before{
-    content:counter(paso); position:absolute; left:0; top:-1px; width:27px; height:27px; border-radius:9px;
-    background:var(--accent-soft); color:var(--accent); border:1px solid var(--line);
-    font:700 .9rem "Chakra Petch",system-ui,sans-serif; display:flex; align-items:center; justify-content:center;
-  }
-  .pista{font-size:.86rem; color:var(--ink-soft); margin:8px 0 0; line-height:1.45}
+  /* ---- pistas: una línea, ni una palabra más ---- */
+  .pista{font-size:.84rem; color:var(--ink-soft); margin:8px 0 0}
   .pista b{color:var(--ink)}
 
   /* ---- botones grandes de atajo ---- */
   .atajos{display:grid; grid-template-columns:1fr 1fr; gap:9px}
   .atajo{
-    display:flex; flex-direction:column; align-items:flex-start; gap:1px; text-align:left;
-    background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:13px 12px;
+    display:flex; align-items:center; gap:10px; text-align:left;
+    background:var(--surface); border:1px solid var(--line); border-radius:15px; padding:13px 12px;
     color:var(--ink); cursor:pointer; box-shadow:var(--shadow); font-family:inherit;
   }
   .atajo:active{transform:scale(.97)}
   .atajo.ancho{grid-column:1 / -1}
-  .atajo .emo{font-size:1.4rem; line-height:1.15}
-  .atajo .tit{font-weight:700; font-size:.98rem}
-  .atajo .sub{font-size:.79rem; color:var(--ink-soft); line-height:1.35}
+  .atajo .emo{font-size:1.3rem; line-height:1}
+  .atajo .tit{font-weight:700; font-size:.97rem}
 
   /* ---- tarjeta de arranque: la calculadora asomando en la portada ---- */
   .arranque{
     padding:16px; border-color:rgba(76,132,222,.42);
     background:linear-gradient(150deg, rgba(76,132,222,.22), var(--surface) 62%);
   }
-  .arranque .tit{margin:0 0 5px; font-size:1.06rem; font-weight:800; color:var(--ink)}
+  .arranque .tit{margin:0 0 3px; font-size:1.06rem; font-weight:800; color:var(--ink)}
   .arranque p.txt{margin:0; font-size:.9rem; color:var(--ink-soft); line-height:1.5}
   .arranque p.txt b{color:var(--ink)}
   .arranque.hecho{border-color:rgba(61,220,132,.35); background:linear-gradient(150deg, rgba(61,220,132,.14), var(--surface) 62%)}
@@ -264,7 +242,6 @@
   .resultado-num .cifra{display:block; font-size:2.7rem; line-height:1.05; color:var(--ink); margin:4px 0 0}
   .resultado-num .uni{font-size:.9rem; color:var(--ink-soft); font-weight:600}
   .resultado-num .prot{display:block; margin-top:8px; font-size:.92rem; color:var(--protein); font-weight:700}
-  .peque-nota{margin:9px 0 0; font-size:.85rem; color:var(--ink-soft); line-height:1.45}
   .ok-msg{
     margin:14px 0 10px; padding:11px 13px; border-radius:13px; background:var(--protein-soft);
     color:var(--protein); font-size:.93rem; font-weight:700;
@@ -444,29 +421,19 @@
   <div class="pane activa" id="pane-hoy">
 
     <section class="card arranque" id="arranque" aria-label="Tus números">
-      <p class="tit" id="arrTit">¿Primera vez? Empieza por aquí</p>
-      <p class="txt" id="arrTxt">Dime tu edad, tu peso y tu altura y te digo <b>cuánto tienes que comer</b>. Son 30 segundos y la comida de abajo se ajusta sola a ti.</p>
+      <p class="tit" id="arrTit">¿Cuánto tienes que comer?</p>
+      <p class="txt" id="arrTxt">4 datos y te lo digo. 30 segundos.</p>
       <button class="btn-primario" id="arrBtn" data-ir="calc">🧮 Calcular lo mío</button>
     </section>
 
-    <section class="explica" aria-label="Cómo funciona la app">
-      <h3>Cómo va esto</h3>
-      <ol class="pasos">
-        <li>Abajo tienes <b>las 3 comidas del día</b>. Cómete lo que pone, ni más ni menos.</li>
-        <li>Cuando te la comas, dale al botón <b>✓</b> de esa comida.</li>
-        <li>El círculo azul se va llenando. <b>Cuando marque 100 % ya has comido lo de hoy.</b> Ya está, eso es todo.</li>
-      </ol>
-      <p class="peque">Si un día te saltas algo, no pasa nada: mañana empiezas de cero otra vez.</p>
-    </section>
-
     <div>
-      <h2>1 · Qué quieres conseguir</h2>
+      <h2>1 · Tu objetivo</h2>
       <div class="chips" role="group" aria-label="Objetivo">
         <button class="chip" data-goal="rec" aria-pressed="true">Recomposición<small>3.100 kcal</small></button>
         <button class="chip" data-goal="def" aria-pressed="false">Definir más<small>2.600 kcal</small></button>
         <button class="chip" data-goal="vol" aria-pressed="false">Volumen<small>3.200 kcal</small></button>
       </div>
-      <p class="pista">Toca uno solo. Si no sabes cuál, deja <b>Recomposición</b>: es quitar barriga sin perder músculo. <b>Definir más</b> = adelgazar más rápido. <b>Volumen</b> = ponerte más grande.</p>
+      <p class="pista">¿Dudas? Deja <b>Recomposición</b>.</p>
     </div>
 
     <section class="card anillo-wrap" aria-label="Progreso de hoy">
@@ -492,23 +459,21 @@
         <div class="barra"><i id="protBar"></i></div>
       </div>
       <p id="msgHoy"></p>
-      <p class="pista">Arriba, las calorías que llevas hoy. Abajo, la <b>proteína</b> (lo que arregla el músculo: pollo, huevo, atún, leche).</p>
     </section>
 
     <div>
-      <h2>2 · El menú según la cartera</h2>
+      <h2>2 · Tu bolsillo</h2>
       <div class="chips" role="group" aria-label="Menú">
         <button class="chip" data-menu="pobre" aria-pressed="false">🪫 Fin de mes<small>~4 €/día</small></button>
         <button class="chip" data-menu="medio" aria-pressed="true">🇩🇴 La bandera<small>~5,50 €/día</small></button>
         <button class="chip" data-menu="paga" aria-pressed="false">💸 Cobré, manín<small>~8,50 €/día</small></button>
       </div>
       <p id="menuFrase"></p>
-      <p class="pista">Toca el que te toque este mes. Los platos son casi los mismos, cambia lo caro por lo barato.</p>
     </div>
 
     <div id="comidasHoy">
-      <h2>3 · Lo que comes hoy</h2>
-      <p class="pista">Las cantidades son <b>con la comida ya hecha</b> (el arroz pesado después de cocerlo, no antes). Abre <b>“Qué lleva”</b> para ver los ingredientes.</p>
+      <h2>3 · Come esto hoy</h2>
+      <p class="pista">Pesado <b>ya cocinado</b>.</p>
       <p id="ajusteNota" hidden></p>
 
       <article class="card comida" data-meal="batido">
@@ -584,31 +549,31 @@
       <article class="card extra" data-meal="extra">
         <div class="info">
           <p class="nombre">Extra +300 kcal</p>
-          <p class="macros">Solo si la báscula baja más de 0,5 kg/semana y no quieres perder: más aceite o 50 g más de avena.</p>
+          <p class="macros">Solo si bajas más de 0,5 kg/semana: aceite o 50 g de avena.</p>
         </div>
         <button class="check" aria-pressed="false" aria-label="Marcar extra de 300 kcal">✓</button>
       </article>
     </div>
 
     <section class="card semana" id="semanaCard" aria-label="Menú semanal">
-      <h2>4 · El menú de la semana</h2>
+      <h2>4 · La semana</h2>
       <div class="sem-hoy" id="semHoy"></div>
       <details>
         <summary>Ver la semana entera</summary>
         <div id="semLista"></div>
-        <p class="sem-pie">El batido cae todos los días y las cantidades son las de tu menú. Con "Fin de mes" tira más de contramuslos, huevos y atún; con "Cobré, manín", pechuga, picada o pescado — la tabla de cambios está en la Guía.</p>
+        <p class="sem-pie">El batido cae todos los días. Cambios de alimentos: en la Guía.</p>
       </details>
     </section>
 
     <div>
-      <h2>¿Qué quieres hacer?</h2>
+      <h2>Ir a</h2>
       <div class="atajos">
-        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Ver mi dieta</span><span class="sub">Lo que toca comer hoy</span></button>
-        <button class="atajo" data-ir="entreno"><span class="emo">🏋️</span><span class="tit">Ver mi entreno</span><span class="sub">Qué músculo toca hoy</span></button>
-        <button class="atajo" data-ir="guia:compraCard"><span class="emo">🛒</span><span class="tit">Ver la compra</span><span class="sub">Qué comprar en el súper</span></button>
-        <button class="atajo" data-ir="bascula"><span class="emo">⚖️</span><span class="tit">Apuntar mi peso</span><span class="sub">1 vez por semana</span></button>
-        <button class="atajo" data-ir="calc"><span class="emo">🧮</span><span class="tit">Calcular mis calorías</span><span class="sub">Tus datos, tu número</span></button>
-        <button class="atajo" data-ir="guia"><span class="emo">❓</span><span class="tit">Tengo una duda</span><span class="sub">Respuestas fáciles</span></button>
+        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Mi dieta</span></button>
+        <button class="atajo" data-ir="entreno"><span class="emo">🏋️</span><span class="tit">Mi entreno</span></button>
+        <button class="atajo" data-ir="guia:compraCard"><span class="emo">🛒</span><span class="tit">La compra</span></button>
+        <button class="atajo" data-ir="bascula"><span class="emo">⚖️</span><span class="tit">Mi peso</span></button>
+        <button class="atajo" data-ir="calc"><span class="emo">🧮</span><span class="tit">Calcular</span></button>
+        <button class="atajo" data-ir="guia"><span class="emo">❓</span><span class="tit">Dudas</span></button>
       </div>
     </div>
   </div>
@@ -616,50 +581,28 @@
   <!-- ============ ENTRENO ============ -->
   <div class="pane" id="pane-entreno">
 
-    <section class="explica" aria-label="Cómo usar el entreno">
-      <h3>Cómo se usa esto</h3>
-      <ol class="pasos">
-        <li>Busca <b>el día de hoy</b> en la lista (está marcado).</li>
-        <li>Haz <b>los músculos que pone</b> ahí. "4 × 4" quiere decir 4 ejercicios de 4 series cada uno.</li>
-        <li>Si pone cardio, lo haces <b>después</b> de las pesas. Nunca antes.</li>
-        <li>Al terminar, dale al botón <b>✓ Hecho</b> del día.</li>
-      </ol>
-      <p class="peque">¿Vas justo de tiempo? Salta el cardio, nunca las pesas.</p>
-    </section>
-
-    <p class="entreno-nota">Las pesas se quedan como están, tigre — lo que marca es el <b>cardio después del hierro</b> (nunca antes) y el doble de abs. Primero el hierro, después el dembow 🎶</p>
+    <p class="entreno-nota">Primero el hierro, después el cardio. Nunca al revés 🎶</p>
 
     <section class="card clip" style="padding:0" aria-label="Plan semanal">
       <div id="listaDias"></div>
     </section>
 
     <section class="card cardio-card" aria-label="Cómo hacer el cardio">
-      <h2>El cardio, bien hecho</h2>
-      <p><b>Siempre después de las pesas</b>, a ritmo de poder hablar (cinta inclinada, bici o elíptica) — o ponte tu dembow y camina rápido en cuesta, eso también cuenta. 20–25 min constantes queman grasa sin comerse tu fuerza. El sábado largo es el que más suma. Si un día vas justo de tiempo, salta el cardio, nunca las pesas, manín.</p>
+      <h2>El cardio</h2>
+      <p>Después de las pesas, 20–25 min a ritmo de poder hablar. Sin tiempo: salta el cardio, nunca las pesas.</p>
     </section>
 
     <div>
-      <h2>Ir a otra cosa</h2>
+      <h2>Ir a</h2>
       <div class="atajos">
-        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Ver mi dieta</span><span class="sub">Lo que toca comer hoy</span></button>
-        <button class="atajo" data-ir="bascula"><span class="emo">⚖️</span><span class="tit">Apuntar mi peso</span><span class="sub">1 vez por semana</span></button>
+        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Mi dieta</span></button>
+        <button class="atajo" data-ir="bascula"><span class="emo">⚖️</span><span class="tit">Mi peso</span></button>
       </div>
     </div>
   </div>
 
   <!-- ============ BÁSCULA ============ -->
   <div class="pane" id="pane-bascula">
-
-    <section class="explica" aria-label="Cómo pesarte">
-      <h3>Cómo se usa esto</h3>
-      <ol class="pasos">
-        <li>Un día fijo a la semana, <b>nada más levantarte</b>, en calzoncillos y después de mear.</li>
-        <li>Súbete a la báscula y escribe el peso en la <b>primera casilla</b>.</li>
-        <li>Con una cinta de medir, mídete la <b>barriga a la altura del ombligo</b> (sin meter tripa) y escríbelo en la segunda.</li>
-        <li>Dale a <b>Apuntar</b>. La app te dice sola si vas bien o no.</li>
-      </ol>
-      <p class="peque">Lo que manda no es el peso, es <b>la barriga</b>: si el peso no baja pero la cintura sí, lo estás haciendo perfecto.</p>
-    </section>
 
     <section class="card" id="pesoCard" aria-label="Báscula">
       <h2>Báscula y cinta · 1 vez por semana</h2>
@@ -669,7 +612,7 @@
         <button id="pesoBtn">Apuntar</button>
       </div>
       <svg id="spark" viewBox="0 0 300 56" preserveAspectRatio="none" aria-hidden="true"></svg>
-      <p id="veredicto">Apunta peso y cintura (a la altura del ombligo, sin meter tripa). En ayunas y siempre a la misma hora.</p>
+      <p id="veredicto">Peso y cintura (por el ombligo, sin meter tripa). En ayunas, mismo día y hora.</p>
       <p id="cinturaNota"></p>
       <ul id="historial"></ul>
     </section>
@@ -691,24 +634,16 @@
     </section>
 
     <div>
-      <h2>Ir a otra cosa</h2>
+      <h2>Ir a</h2>
       <div class="atajos">
-        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Ver mi dieta</span><span class="sub">Lo que toca comer hoy</span></button>
-        <button class="atajo" data-ir="calc"><span class="emo">🧮</span><span class="tit">Recalcular</span><span class="sub">Si has cambiado de peso</span></button>
+        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Mi dieta</span></button>
+        <button class="atajo" data-ir="calc"><span class="emo">🧮</span><span class="tit">Recalcular</span></button>
       </div>
     </div>
   </div>
 
   <!-- ============ GUÍA ============ -->
   <div class="pane" id="pane-guia">
-
-    <section class="explica" aria-label="Lo básico en 4 líneas">
-      <h3>Lo básico, en 4 líneas</h3>
-      <p class="grande">Come las 3 comidas que te pone la app, entrena, pésate una vez por semana. Ya está.</p>
-      <p><b>Caloría (kcal)</b> = la gasolina que tiene la comida. Si comes más de las que gastas, engordas; menos, adelgazas.</p>
-      <p><b>Proteína</b> = lo que arregla y hace el músculo. Está en el pollo, el huevo, el atún, la leche y las habichuelas. Es lo único que <b>nunca</b> se recorta.</p>
-      <p><b>Aquí abajo</b> tienes las dudas típicas: ábrelas tocando en la flechita ▸.</p>
-    </section>
 
     <section class="card reglas" aria-label="Reglas rápidas">
       <h2>Dudas típicas</h2>
@@ -719,10 +654,6 @@
       <details>
         <summary>¿Tengo que pesar la comida siempre?</summary>
         <p>Los primeros días sí, para coger el ojo. Luego con <b>la regla del plato</b> (justo aquí abajo) vas sobrado.</p>
-      </details>
-      <details>
-        <summary>¿Puedo cambiar un alimento por otro?</summary>
-        <p>Sí. Mira la <b>tabla de cambios</b> más abajo: ahí pone qué cosas valen lo mismo (250 g de pollo = 5 huevos + 1 lata de atún, etc.).</p>
       </details>
       <details>
         <summary>La regla del plato (sin pesar)</summary>
@@ -758,14 +689,13 @@
       <h2>La compra de la semana</h2>
       <ul id="listaCompra"></ul>
       <p class="nota" id="notaCompra">Precios orientativos de marca blanca.</p>
-      <p class="pista">Toca cada línea para tacharla cuando la eches al carro. La lista cambia sola según el menú que hayas elegido en <b>Hoy</b>.</p>
     </section>
 
     <div>
-      <h2>Ir a otra cosa</h2>
+      <h2>Ir a</h2>
       <div class="atajos">
-        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Ver mi dieta</span><span class="sub">Lo que toca comer hoy</span></button>
-        <button class="atajo" data-ir="entreno"><span class="emo">🏋️</span><span class="tit">Ver mi entreno</span><span class="sub">Qué músculo toca hoy</span></button>
+        <button class="atajo" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Mi dieta</span></button>
+        <button class="atajo" data-ir="entreno"><span class="emo">🏋️</span><span class="tit">Mi entreno</span></button>
       </div>
     </div>
 
@@ -775,44 +705,32 @@
   <!-- ============ CALCULADORA ============ -->
   <div class="pane" id="pane-calc">
 
-    <section class="explica" aria-label="Para qué sirve esta pantalla">
-      <h3>Empieza por aquí</h3>
-      <p class="grande">Esta pantalla hace una sola cosa: decirte <b>cuánto tienes que comer tú</b> cada día.</p>
-      <ol class="pasos">
-        <li>Rellena las <b>4 casillas</b> de abajo: los años que tienes, lo que pesas, lo que mides y cuántos días vas al gym.</li>
-        <li>Dale al botón azul <b>“Calcular”</b>.</li>
-        <li>Te sale un número. Dale a <b>“Usar estos números”</b> y las comidas de la app se ajustan solas a ti.</li>
-      </ol>
-      <p class="peque">Solo hay que hacerlo <b>una vez</b>. Vuelve por aquí si cambias mucho de peso.</p>
-    </section>
-
     <section class="card" aria-label="Calculadora de calorías">
       <h2>Tus datos</h2>
-      <p class="calc-intro">Se guardan solo en tu móvil. Nadie más los ve.</p>
+      <p class="calc-intro">4 casillas y ya. Se guardan solo en tu móvil.</p>
       <div class="chips" role="group" aria-label="Sexo">
         <button class="chip" data-sexo="h" aria-pressed="true">Hombre</button>
         <button class="chip" data-sexo="m" aria-pressed="false">Mujer</button>
       </div>
       <div class="calc-grid">
-        <label>¿Cuántos años tienes?<input type="number" id="cEdad" inputmode="numeric" min="14" max="90" placeholder="20"></label>
-        <label>¿Cuánto pesas? (kilos)<input type="number" id="cPeso" inputmode="decimal" min="35" max="250" placeholder="85"></label>
-        <label>¿Cuánto mides? (cm)<input type="number" id="cAltura" inputmode="numeric" min="130" max="230" placeholder="193"></label>
-        <label>¿Cuántos días entrenas a la semana?<input type="number" id="cDias" inputmode="numeric" min="0" max="7" placeholder="5"></label>
-        <label class="ancho">¿Cómo te llamamos? (sale en la portada, es opcional)<input type="text" id="cNombre" maxlength="12" placeholder="EL TIGRE" autocomplete="off"></label>
+        <label>Años<input type="number" id="cEdad" inputmode="numeric" min="14" max="90" placeholder="20"></label>
+        <label>Peso (kg)<input type="number" id="cPeso" inputmode="decimal" min="35" max="250" placeholder="85"></label>
+        <label>Altura (cm)<input type="number" id="cAltura" inputmode="numeric" min="130" max="230" placeholder="193"></label>
+        <label>Días de gym/semana<input type="number" id="cDias" inputmode="numeric" min="0" max="7" placeholder="5"></label>
+        <label class="ancho">Tu apodo (opcional)<input type="text" id="cNombre" maxlength="12" placeholder="EL TIGRE" autocomplete="off"></label>
       </div>
       <button class="btn-primario" id="calcBtn">🧮 Calcular</button>
       <p class="pista" id="calcAviso" hidden></p>
       <div id="calcRes" hidden>
         <div class="resultado-num">
-          <span class="label">Tienes que comer al día</span>
+          <span class="label">Come al día</span>
           <b class="cifra num" id="calcGrande">0</b>
-          <span class="uni">kcal (calorías)</span>
+          <span class="uni">kcal</span>
           <span class="prot" id="calcProtGrande"></span>
         </div>
-        <p class="peque-nota">La app reparte ese número entre tus <b>3 comidas</b> y te dice cuánto arroz y cuánta avena te tocan. Tú solo tienes que comértelo.</p>
         <button class="btn-primario" id="aplicarBtn">✅ Usar estos números en la app</button>
         <details class="calc-mas">
-          <summary>Ver los números por dentro (no hace falta)</summary>
+          <summary>Ver los números por dentro</summary>
           <div class="calc-tabla" id="calcTabla"></div>
         </details>
       </div>
@@ -820,11 +738,11 @@
     </section>
 
     <section id="trasCalc" hidden aria-label="Y ahora qué">
-      <p class="ok-msg">✅ Listo. Tus comidas ya están ajustadas a ti. ¿Y ahora qué?</p>
+      <p class="ok-msg">✅ Listo, ya está ajustado a ti.</p>
       <div class="atajos">
-        <button class="atajo ancho" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Ver mi dieta</span><span class="sub">Las 3 comidas de hoy, con tus cantidades</span></button>
-        <button class="atajo" data-ir="entreno"><span class="emo">🏋️</span><span class="tit">Ver mi entreno</span><span class="sub">Qué toca hoy</span></button>
-        <button class="atajo" data-ir="guia:compraCard"><span class="emo">🛒</span><span class="tit">Ver la compra</span><span class="sub">Qué comprar</span></button>
+        <button class="atajo ancho" data-ir="hoy:comidasHoy"><span class="emo">🍽️</span><span class="tit">Mi dieta</span></button>
+        <button class="atajo" data-ir="entreno"><span class="emo">🏋️</span><span class="tit">Mi entreno</span></button>
+        <button class="atajo" data-ir="guia:compraCard"><span class="emo">🛒</span><span class="tit">La compra</span></button>
       </div>
     </section>
 
@@ -1417,12 +1335,12 @@
     var el = document.getElementById("veredicto");
     el.className="";
     if(st.weights.length===0 && st.waists.length===0){
-      el.textContent="Apunta peso y cintura (a la altura del ombligo, sin meter tripa). En ayunas y siempre a la misma hora.";
+      el.textContent="Peso y cintura (por el ombligo, sin meter tripa). En ayunas, mismo día y hora.";
       return;
     }
     var r = ritmoSemanal();
-    if(!r){ el.textContent="Apuntado. Con el segundo registro (dale unos días) te digo si vas bien."; return; }
-    if(r.pocos){ el.textContent="Necesito pesos con al menos una semana entre medias para calcular el ritmo. Sigue apuntando."; return; }
+    if(!r){ el.textContent="Apuntado. Con el segundo te digo si vas bien."; return; }
+    if(r.pocos){ el.textContent="Me falta una semana entre pesadas. Sigue apuntando."; return; }
     var v = Math.round(r.kgSem*100)/100;
     var txt = (v>0?"+":"")+String(v).replace(".",",")+" kg/semana. ";
     if(st.goal==="rec"){
@@ -1587,13 +1505,13 @@
     if(!d.comida) pend.push("la comida");
     if(!d.cena) pend.push("la cena");
     if(kcal>meta+200){
-      msg.innerHTML = "Te pasaste por <strong>"+fmt(kcal-meta)+" kcal</strong>, manín — mañana sin Extra y el cardio completo.";
+      msg.innerHTML = "<strong>+"+fmt(kcal-meta)+" kcal</strong> de más. Mañana sin Extra.";
     } else if(falta<=0){
       msg.innerHTML = "<strong>¡TÁ TO', LA CABRA! 🐐</strong> A dormir bien, que durmiendo es que se crece.";
     } else if(pend.length===0){
-      msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — hoy toca el Extra o un puñado más de lo que sea.";
+      msg.innerHTML = "Faltan <strong>"+fmt(falta)+" kcal</strong>: dale al Extra.";
     } else {
-      msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — te queda"+(pend.length>1?"n":"")+" "+pend.join(", ")+". Dale, bee.";
+      msg.innerHTML = "Faltan <strong>"+fmt(falta)+" kcal</strong>: "+pend.join(", ")+".";
     }
 
     veredicto(); notaCintura(); sparkline(); historial(); renderCompra(); renderArranque();
@@ -1608,14 +1526,14 @@
     if(!card) return;
     if(st.perfil){
       card.classList.add("hecho");
-      tit.textContent = "Tus números ya están puestos ✅";
-      txt.innerHTML = "Te tocan <b>"+fmt(goalKcal(st.goal))+" kcal</b> y <b>"+protMeta()+" g</b> de proteína al día. Las comidas de abajo ya están ajustadas a ti.";
+      tit.textContent = "Lo tuyo ✅";
+      txt.innerHTML = "<b>"+fmt(goalKcal(st.goal))+" kcal</b> y <b>"+protMeta()+" g</b> de proteína al día.";
       btn.className = "btn-secundario";
       btn.textContent = "🧮 Volver a calcular";
     } else {
       card.classList.remove("hecho");
-      tit.textContent = "¿Primera vez? Empieza por aquí";
-      txt.innerHTML = "Dime tu edad, tu peso y tu altura y te digo <b>cuánto tienes que comer</b>. Son 30 segundos y la comida de abajo se ajusta sola a ti.";
+      tit.textContent = "¿Cuánto tienes que comer?";
+      txt.innerHTML = "4 datos y te lo digo. 30 segundos.";
       btn.className = "btn-primario";
       btn.textContent = "🧮 Calcular lo mío";
     }
@@ -1645,10 +1563,10 @@
       aviso.innerHTML = "☝️ "+texto;
       campo.focus();
     }
-    if(!(edad>=14&&edad<=90)){ falta(eEdad, "Escribe <b>los años que tienes</b> (entre 14 y 90)."); return; }
-    if(!(peso>=35&&peso<=250)){ falta(ePeso, "Escribe <b>lo que pesas en kilos</b>, por ejemplo 85."); return; }
-    if(!(altura>=130&&altura<=230)){ falta(eAlt, "Escribe <b>lo que mides en centímetros</b>: 1,93 m se escribe <b>193</b>."); return; }
-    if(!(dias>=0&&dias<=7)){ falta(eDias, "Escribe <b>cuántos días entrenas</b> a la semana, de 0 a 7."); return; }
+    if(!(edad>=14&&edad<=90)){ falta(eEdad, "Te faltan <b>los años</b>."); return; }
+    if(!(peso>=35&&peso<=250)){ falta(ePeso, "Te falta <b>el peso</b> en kilos."); return; }
+    if(!(altura>=130&&altura<=230)){ falta(eAlt, "Te falta <b>la altura</b> en cm: 1,93 m = <b>193</b>."); return; }
+    if(!(dias>=0&&dias<=7)){ falta(eDias, "Te faltan <b>los días de gym</b> (0 a 7)."); return; }
     aviso.hidden = true;
     var tmb = 10*peso + 6.25*altura - 5*edad + (sexoSel==="h" ? 5 : -161);
     var fa = dias<=1 ? 1.3 : dias<=3 ? 1.42 : dias<=5 ? 1.55 : 1.68;
@@ -1679,7 +1597,7 @@
       t.appendChild(div);
     });
     document.getElementById("calcGrande").textContent = fmt(targets.rec);
-    document.getElementById("calcProtGrande").textContent = "y "+prot+" g de proteína al día";
+    document.getElementById("calcProtGrande").textContent = "+ "+prot+" g de proteína";
     document.getElementById("calcRes").hidden = false;
     document.getElementById("trasCalc").hidden = true;
   });
