@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#070912">
+<meta name="theme-color" content="#05080F">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Modo Animal">
@@ -11,42 +11,21 @@
 </head>
 <body>
 <title>Joel Modo Animal</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Sans:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Chakra+Petch:wght@500;600;700&family=Instrument+Sans:wght@400..700&display=swap">
 <style>
+  /* Tema único comprometido: noche caribeña futurista (estilo dashboard) */
   :root{
-    --bg:#F3F4FA; --surface:#FFFFFF; --surface2:#EAEDF6; --surface3:#DFE4F2;
-    --ink:#131829; --ink-soft:#565E79; --line:#D8DDEC;
-    --accent:#2C46D6; --accent-ink:#FFFFFF; --accent-soft:#E2E7FC;
-    --protein:#0F8A5F; --protein-soft:#DCF2E8;
-    --good:#0F8A5F; --warn:#B4700F; --bad:#C23B3B;
-    --hero-bg1:#161B33; --hero-bg2:#0D101F; --hero-ink:#F2F4FF; --hero-soft:#8E97C4; --hero-accent:#8FA2FF;
-    --nav-bg:rgba(255,255,255,.88);
-    --glow:rgba(44,70,214,.22);
-    --shadow:0 1px 2px rgba(19,24,41,.06),0 8px 24px rgba(19,24,41,.08);
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0C0F1A; --surface:#151A2B; --surface2:#1D2338; --surface3:#252C45;
-      --ink:#EAEDF8; --ink-soft:#98A1BE; --line:#293049;
-      --accent:#7D93FF; --accent-ink:#0C0F1A; --accent-soft:#232C52;
-      --protein:#3CC993; --protein-soft:#16352A;
-      --good:#3CC993; --warn:#E09A3E; --bad:#E0605A;
-      --hero-bg1:#181E3A; --hero-bg2:#0B0E1C; --hero-ink:#F2F4FF; --hero-soft:#8E97C4; --hero-accent:#8FA2FF;
-      --nav-bg:rgba(16,20,35,.9);
-      --glow:rgba(125,147,255,.4);
-      --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px rgba(0,0,0,.4);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0C0F1A; --surface:#151A2B; --surface2:#1D2338; --surface3:#252C45;
-    --ink:#EAEDF8; --ink-soft:#98A1BE; --line:#293049;
-    --accent:#7D93FF; --accent-ink:#0C0F1A; --accent-soft:#232C52;
-    --protein:#3CC993; --protein-soft:#16352A;
-    --good:#3CC993; --warn:#E09A3E; --bad:#E0605A;
-    --hero-bg1:#181E3A; --hero-bg2:#0B0E1C; --hero-ink:#F2F4FF; --hero-soft:#8E97C4; --hero-accent:#8FA2FF;
-    --nav-bg:rgba(16,20,35,.9);
-    --glow:rgba(125,147,255,.4);
-    --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px rgba(0,0,0,.4);
+    --bg:#05080F;
+    --surface:rgba(13,20,36,.74); --surface2:rgba(140,180,255,.08); --surface3:rgba(140,180,255,.14);
+    --ink:#EAF2FF; --ink-soft:#93A3C4; --line:rgba(120,160,255,.16);
+    --accent:#29E0FF; --accent-ink:#04121C; --accent-soft:rgba(41,224,255,.13);
+    --protein:#3DDC84; --protein-soft:rgba(61,220,132,.14);
+    --good:#3DDC84; --warn:#FFB020; --bad:#FF4D5E;
+    --gold:#FFD84D; --rd-red:#FF3B5C;
+    --hero-ink:#F4F8FF; --hero-soft:#D8E4F8; --hero-accent:#FFD84D;
+    --nav-bg:rgba(7,12,21,.82);
+    --glow:rgba(41,224,255,.35);
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 10px 30px rgba(0,0,0,.45);
   }
 
   *{box-sizing:border-box}
@@ -59,13 +38,14 @@
     touch-action:manipulation;
     overscroll-behavior-y:none;
   }
-  main{max-width:480px; margin:0 auto; padding:12px 12px calc(94px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:13px}
+  #bgCv{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
+  main{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:12px 12px calc(94px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:13px}
 
   .display{font-family:"Archivo",system-ui,-apple-system,sans-serif; font-stretch:118%; font-weight:800}
-  .num{font-family:"Archivo",system-ui,sans-serif; font-weight:800; font-variant-numeric:tabular-nums}
-  .label{font-size:.72rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
-  h2{font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 8px; font-weight:700; display:flex; align-items:center; gap:8px}
-  h2::before{content:""; width:8px; height:8px; background:var(--accent); flex:none}
+  .num{font-family:"Chakra Petch","Archivo",system-ui,sans-serif; font-weight:700; font-variant-numeric:tabular-nums}
+  .label{font-family:"Chakra Petch",system-ui,sans-serif; font-size:.72rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
+  h2{font-family:"Chakra Petch",system-ui,sans-serif; font-size:.76rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 8px; font-weight:600; display:flex; align-items:center; gap:8px}
+  h2::before{content:""; width:8px; height:8px; background:var(--accent); flex:none; box-shadow:0 0 8px var(--glow)}
 
   button, .chip, .check, .cbx{user-select:none; -webkit-user-select:none}
 
@@ -97,30 +77,34 @@
   body:not(.ready) .hero{animation-play-state:paused}
   .hero{animation:rise .55s cubic-bezier(.2,.7,.3,1) both}
 
-  /* ================= HERO ================= */
+  /* ================= HERO: cristal oscuro con luces neón ================= */
   .hero{
-    border-radius:20px; padding:22px 18px 18px; color:var(--hero-ink); position:relative; overflow:hidden;
-    background:
-      repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 12px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 12px),
-      linear-gradient(140deg, var(--hero-bg1), var(--hero-bg2));
+    border-radius:20px; padding:20px 18px 18px; color:#FFFFFF; position:relative; overflow:hidden;
+    border:1px solid rgba(255,255,255,.16);
+    background:linear-gradient(140deg,#121212,#040404);
     box-shadow:var(--shadow);
   }
-  #heroCv{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
   .hero .cont{position:relative}
-  .hero .eyebrow{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--hero-accent)}
-  .hero h1{margin:.1em 0 0; line-height:.94; letter-spacing:.01em; font-size:2.8rem; font-stretch:124%; font-weight:900; text-wrap:balance}
+  .hero .fila-top{display:flex; align-items:center; justify-content:flex-start; gap:10px}
+  .hero .eyebrow{font-family:"Chakra Petch",system-ui,sans-serif; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:#CFCFCF}
+  .bandera-rd{width:29px; height:19px; border-radius:4px; overflow:hidden; flex:none; box-shadow:0 0 0 1px rgba(255,255,255,.22), 0 2px 8px rgba(0,0,0,.5)}
+  .hero h1{margin:.12em 0 0; line-height:.94; letter-spacing:.01em; font-size:2.55rem; font-stretch:124%; font-weight:900; text-wrap:balance}
   .hero .grad{
-    background:linear-gradient(92deg, #8FA2FF 10%, #3CC993 90%);
+    display:block;
+    background:linear-gradient(92deg, #FFFFFF 20%, #C9C9C9 95%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .hero .outline{display:block; color:transparent; -webkit-text-stroke:1.5px var(--hero-ink); font-size:.76em; letter-spacing:.045em}
-  @supports not (-webkit-text-stroke: 1px black){ .hero .outline{color:var(--hero-ink)} }
-  .hero .fecha{color:var(--hero-soft); margin-top:10px; font-size:.9rem}
-  .hero.mini{padding:13px 18px}
-  .hero.mini h1{font-size:1.35rem; display:flex; align-items:baseline; gap:10px}
-  .hero.mini .outline{font-size:.95em}
-  .hero.mini .eyebrow, .hero.mini .fecha{display:none}
+  .hero .outline{display:block; color:transparent; -webkit-text-stroke:1.5px #FFFFFF; font-size:.7em; letter-spacing:.05em}
+  @supports not (-webkit-text-stroke: 1px black){ .hero .outline{color:#FFFFFF} }
+  .hero .fecha{color:#9E9E9E; margin-top:10px; font-size:.9rem}
+  .hero .frase{color:#E4E4E4; margin-top:3px; font-size:.92rem; font-weight:600}
+  .hero.mini{padding:12px 18px}
+  .hero.mini .fila-top{position:absolute; right:0; top:2px}
+  .hero.mini h1{font-size:1.3rem; display:flex; align-items:baseline; gap:10px; padding-right:40px}
+  .hero.mini .grad{display:inline}
+  .hero.mini .outline{display:inline; font-size:.95em}
+  .hero.mini .eyebrow, .hero.mini .fecha, .hero.mini .frase{display:none}
+  .hero.mini .bandera-rd{width:24px; height:16px}
 
   /* ================= PESTAÑAS ================= */
   .pane{display:none; flex-direction:column; gap:13px}
@@ -181,6 +165,37 @@
   .sem-dia .sem-txt b{color:var(--ink)}
   .sem-dia .sem-txt .nota{font-size:.78rem; color:var(--accent); margin-top:2px}
   .sem-pie{font-size:.78rem; color:var(--ink-soft); margin:10px 0 0}
+
+  /* ---- calculadora ---- */
+  .calc-intro{margin:0 0 12px; font-size:.92rem; color:var(--ink-soft)}
+  .calc-grid{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:12px}
+  .calc-grid label{display:flex; flex-direction:column; gap:4px; font-size:.75rem; font-weight:600; color:var(--ink-soft)}
+  .calc-grid label.ancho{grid-column:1 / -1}
+  .calc-grid input{
+    border:1px solid var(--line); background:var(--surface2); color:var(--ink);
+    border-radius:13px; padding:11px 12px; font:600 1rem "Archivo",system-ui,sans-serif; font-variant-numeric:tabular-nums;
+    width:100%; min-width:0;
+  }
+  .calc-grid input::placeholder{color:var(--ink-soft); font-weight:400}
+  .btn-primario{
+    display:block; width:100%; margin-top:12px; border:none; background:var(--accent); color:var(--accent-ink);
+    border-radius:13px; padding:12px; font:700 .98rem "Instrument Sans",system-ui,sans-serif; cursor:pointer;
+  }
+  .btn-primario:active{transform:scale(.97)}
+  .calc-tabla{margin-top:14px; border-radius:13px; background:var(--surface2); padding:12px; font-size:.92rem}
+  .calc-tabla .fila{display:flex; justify-content:space-between; padding:4px 0; color:var(--ink-soft)}
+  .calc-tabla .fila b{color:var(--ink); font-variant-numeric:tabular-nums}
+  .calc-tabla .fila.dest{border-top:1px dashed var(--line); margin-top:4px; padding-top:8px}
+  .calc-tabla .fila.dest b{color:var(--accent); font-size:1.05rem}
+  .calc-estado{margin:10px 0 0; font-size:.85rem; color:var(--good); font-weight:600}
+  .calc-estado a, .calc-estado button.enlace{
+    background:none; border:none; padding:0; color:var(--accent); font:600 .85rem "Instrument Sans",system-ui,sans-serif;
+    text-decoration:underline; cursor:pointer;
+  }
+  #ajusteNota{
+    margin:0 0 10px; padding:9px 12px; border-radius:12px; background:var(--protein-soft);
+    color:var(--protein); font-size:.85rem; font-weight:600;
+  }
 
   /* ---- comidas ---- */
   .comida{overflow:hidden}
@@ -328,16 +343,27 @@
 
 <div id="intro" aria-hidden="true">
   <canvas id="introCv"></canvas>
-  <div class="intro-sub" id="introSub">Modo Animal</div>
+  <div class="intro-sub" id="introSub">Entrar ▸</div>
 </div>
+
+<canvas id="bgCv" aria-hidden="true"></canvas>
 
 <main>
   <header class="hero" id="hero">
-    <canvas id="heroCv" aria-hidden="true"></canvas>
     <div class="cont">
-      <div class="eyebrow">Recomposición · 85 kg y marcado</div>
-      <h1 class="display"><span class="grad">JOEL</span><span class="outline">MODO ANIMAL</span></h1>
+      <div class="fila-top">
+        <svg class="bandera-rd" viewBox="0 0 29 19" aria-label="Bandera de República Dominicana" role="img">
+          <rect width="29" height="19" fill="#FFFFFF"/>
+          <rect x="0" y="0" width="12" height="7.5" fill="#002D62"/>
+          <rect x="17" y="0" width="12" height="7.5" fill="#CE1126"/>
+          <rect x="0" y="11.5" width="12" height="7.5" fill="#CE1126"/>
+          <rect x="17" y="11.5" width="12" height="7.5" fill="#002D62"/>
+        </svg>
+        <div class="eyebrow">KLK · Modo Animal RD</div>
+      </div>
+      <h1 class="display"><span class="grad" id="heroNombre">MODO ANIMAL</span><span class="outline" id="heroApellido">LA CABRA</span></h1>
       <div class="fecha" id="fecha"></div>
+      <div class="frase" id="fraseDia"></div>
     </div>
   </header>
 
@@ -369,7 +395,7 @@
         </div>
       </div>
       <div class="prot-linea">
-        <div class="fila"><span class="label">Proteína</span><span class="num"><b id="protNum">0</b> / 160 g</span></div>
+        <div class="fila"><span class="label">Proteína</span><span class="num"><b id="protNum">0</b> / <span id="protMetaEl">160</span> g</span></div>
         <div class="barra"><i id="protBar"></i></div>
       </div>
       <p id="msgHoy"></p>
@@ -378,15 +404,16 @@
     <div>
       <h2>El menú según la cartera</h2>
       <div class="chips" role="group" aria-label="Menú">
-        <button class="chip" data-menu="pobre" aria-pressed="false">🪫 Mes pobre<small>~3,70 €/día</small></button>
-        <button class="chip" data-menu="medio" aria-pressed="true">⚖️ Mes medio<small>~5 €/día</small></button>
-        <button class="chip" data-menu="paga" aria-pressed="false">💸 Día de paga<small>~8 €/día</small></button>
+        <button class="chip" data-menu="pobre" aria-pressed="false">🪫 Fin de mes<small>~3,70 €/día</small></button>
+        <button class="chip" data-menu="medio" aria-pressed="true">🇩🇴 La bandera<small>~5,50 €/día</small></button>
+        <button class="chip" data-menu="paga" aria-pressed="false">💸 Cobré, manín<small>~8,50 €/día</small></button>
       </div>
       <p id="menuFrase"></p>
     </div>
 
     <div>
       <h2>Comidas de hoy · en cocinado</h2>
+      <p id="ajusteNota" hidden></p>
 
       <article class="card comida" data-meal="batido">
         <div class="cab">
@@ -473,14 +500,14 @@
       <details>
         <summary>Ver la semana entera</summary>
         <div id="semLista"></div>
-        <p class="sem-pie">El batido cae todos los días y las cantidades son las de tu menú. Con "Mes pobre" cambia el pollo por 5 huevos + atún; con "Día de paga", por pechuga o ternera — la tabla de cambios está en la Guía.</p>
+        <p class="sem-pie">El batido cae todos los días y las cantidades son las de tu menú. Con "Fin de mes" el pollo se vuelve revoltillo con sardinas; con "Cobré, manín", pechuga o res — la tabla de cambios está en la Guía.</p>
       </details>
     </section>
   </div>
 
   <!-- ============ ENTRENO ============ -->
   <div class="pane" id="pane-entreno">
-    <p class="entreno-nota">Tus pesas se quedan como están — lo que define es el <b>cardio después del hierro</b> (nunca antes) y el doble de abs. El músculo que ya mueves es el que marca.</p>
+    <p class="entreno-nota">Las pesas se quedan como están, tigre — lo que marca es el <b>cardio después del hierro</b> (nunca antes) y el doble de abs. Primero el hierro, después el dembow 🎶</p>
 
     <section class="card clip" style="padding:0" aria-label="Plan semanal">
       <div id="listaDias"></div>
@@ -488,7 +515,7 @@
 
     <section class="card cardio-card" aria-label="Cómo hacer el cardio">
       <h2>El cardio, bien hecho</h2>
-      <p><b>Siempre después de las pesas</b>, a ritmo de poder hablar (cinta inclinada, bici o elíptica). No hace falta matarse: 20–25 min constantes queman grasa sin comerse tu fuerza. El sábado largo es el que más suma. Si un día vas justo de tiempo, salta el cardio, nunca las pesas.</p>
+      <p><b>Siempre después de las pesas</b>, a ritmo de poder hablar (cinta inclinada, bici o elíptica) — o ponte tu dembow y camina rápido en cuesta, eso también cuenta. 20–25 min constantes queman grasa sin comerse tu fuerza. El sábado largo es el que más suma. Si un día vas justo de tiempo, salta el cardio, nunca las pesas, manín.</p>
     </section>
   </div>
 
@@ -530,11 +557,11 @@
       <h2>Reglas rápidas</h2>
       <details>
         <summary>La regla del plato (sin pesar)</summary>
-        <p>Arroz o legumbre = <b>un plato hondo lleno</b>. Carne = <b>una pieza como tu palma y algo más</b>. El batido no falla porque va medido de víspera.</p>
+        <p>Arroz, habichuelas o víveres = <b>un plato hondo lleno</b>. Carne = <b>una pieza como tu palma y algo más</b>. Aguacate = <b>la mitad, no la mata entera</b> 😅. El batido no falla porque va medido de víspera.</p>
       </details>
       <details>
         <summary>Cocinado vs crudo — no mezcles</summary>
-        <p>Todas las cantidades de esta app son <b>en cocinado</b>. Si un día pesas en crudo: el arroz triplica al cocerse (400 g cocido = 135 g crudo), la legumbre multiplica por 2,5 (300 g cocida = 120 g seca) y el pollo pierde un 30&nbsp;% (250 g cocinado = 350 g crudo con hueso).</p>
+        <p>Todas las cantidades de esta app son <b>en cocinado</b>. Si un día pesas en crudo: el arroz triplica al cocerse (350 g cocido = 115 g crudo), la habichuela multiplica por 2,5 (150 g guisada = 60 g seca) y el pollo pierde un 30&nbsp;% (200 g guisado = 285 g crudo con hueso).</p>
       </details>
       <details>
         <summary>Cuánta proteína necesitas de verdad</summary>
@@ -542,19 +569,19 @@
       </details>
       <details>
         <summary>Para gastar lo mínimo</summary>
-        <p>Huevos y avena son la proteína y las calorías más baratas que existen. Contramuslo antes que pechuga. Legumbre seca antes que de bote. Marca blanca en todo. Este plan sale por <b>4–6 € al día</b>.</p>
+        <p>Huevos y avena son la proteína y las calorías más baratas que existen, manín. Pollo entero o contramuslos antes que pechuga. Habichuela seca antes que de lata. Víveres antes que cualquier paquete. Marca blanca en todo. Este plan sale por <b>4–6 € al día</b>.</p>
       </details>
       <details>
         <summary>Tabla de cambios (mismas kcal)</summary>
-        <p>Proteína: <b>250 g de pollo cocinado</b> = 5 huevos + 1 lata de atún = 300 g de picada magra cocinada = 250 g de pavo o pechuga.<br>
-        Carbohidrato: <b>400 g de arroz cocido</b> = 400 g de pasta cocida = 550 g de patata cocida = 130 g de pan.<br>
-        Legumbre: <b>300 g cocidos</b> de lentejas = garbanzos = alubias, tal cual.<br>
-        Fruta: <b>1 plátano</b> = 1 manzana grande = 2 mandarinas = 1 pera.<br>
-        Grasa: <b>30 g de crema de cacahuete</b> = 35 g de cacahuetes = 25 g de almendras = 1 chorro largo de aceite.</p>
+        <p>Proteína: <b>250 g de pollo guisado</b> = 5 huevos + 1 lata de atún = 300 g de picada magra = 250 g de pechuga o pavo.<br>
+        Carbohidrato: <b>350 g de arroz cocido</b> = 350 g de espaguetis cocidos = 300 g de mangú = 400 g de víveres hervidos (yuca, plátano, batata) = 120 g de pan.<br>
+        Habichuelas: <b>150 g guisadas</b> = guandules = lentejas = garbanzos, tal cual.<br>
+        Fruta: <b>1 guineo</b> = 1 manzana grande = 2 mandarinas = 1 lechosa chiquita en tajadas.<br>
+        Grasa: <b>30 g de mantequilla de cacahuete</b> = 35 g de cacahuetes = <b>1/2 aguacate</b> = 1 chorro largo de aceite.</p>
       </details>
       <details>
-        <summary>Tus números</summary>
-        <p>20 años, 85 kg, 1,93 m, pesas 5 días + cardio: gasto total ~<b>3.100–3.200 kcal</b> (basal ~1.960). Comer 3.100 con 160 g de proteína = quedarte en 85 mientras cambias grasa por músculo. Definir más 2.600 · volumen 3.200.</p>
+        <summary>Los números base</summary>
+        <p>La app viene puesta pa' un tipo de 20 años, 85 kg y 1,93 m con pesas 5 días + cardio: ~<b>3.100 kcal</b> y 160 g de proteína. Si ese no eres tú, ve a la pestaña <b>Calcular</b>, mete tus datos y las raciones se ajustan solas a lo tuyo.</p>
       </details>
     </section>
 
@@ -565,6 +592,47 @@
     </section>
 
     <footer>Orientación general de nutrición y entreno, no consejo médico. Los datos se guardan solo en este móvil.</footer>
+  </div>
+
+  <!-- ============ CALCULADORA ============ -->
+  <div class="pane" id="pane-calc">
+    <section class="card" aria-label="Calculadora de calorías">
+      <h2>Calcula lo tuyo</h2>
+      <p class="calc-intro">Mete tus datos y te digo cuántas calorías necesitas al día. Si aplicas el resultado, las comidas y los tres menús de la app se ajustan solos a tu número.</p>
+      <div class="chips" role="group" aria-label="Sexo">
+        <button class="chip" data-sexo="h" aria-pressed="true">Hombre</button>
+        <button class="chip" data-sexo="m" aria-pressed="false">Mujer</button>
+      </div>
+      <div class="calc-grid">
+        <label>Edad<input type="number" id="cEdad" inputmode="numeric" min="14" max="90" placeholder="20"></label>
+        <label>Peso (kg)<input type="number" id="cPeso" inputmode="decimal" min="35" max="250" placeholder="85"></label>
+        <label>Altura (cm)<input type="number" id="cAltura" inputmode="numeric" min="130" max="230" placeholder="193"></label>
+        <label>Días de entreno/semana<input type="number" id="cDias" inputmode="numeric" min="0" max="7" placeholder="5"></label>
+        <label class="ancho">Tu apodo (saldrá en la portada y en la entrada de píxeles)<input type="text" id="cNombre" maxlength="12" placeholder="EL TIGRE" autocomplete="off"></label>
+      </div>
+      <button class="btn-primario" id="calcBtn">Calcular</button>
+      <div id="calcRes" hidden>
+        <div class="calc-tabla" id="calcTabla"></div>
+        <button class="btn-primario" id="aplicarBtn">Usar estos números en la app</button>
+      </div>
+      <p class="calc-estado" id="calcEstado"></p>
+    </section>
+
+    <section class="card reglas" aria-label="Cómo se calcula">
+      <h2>Cómo se calcula</h2>
+      <details>
+        <summary>La fórmula (sin humo)</summary>
+        <p>Metabolismo basal por <b>Mifflin-St Jeor</b> (la que usan los nutricionistas), multiplicado por tu actividad según los días que entrenas. Definir = gasto −450 kcal · mantener/recomposición = el gasto · volumen = gasto +200. Proteína: <b>1,9 g por kilo</b>.</p>
+      </details>
+      <details>
+        <summary>Y las raciones se adaptan</summary>
+        <p>Los tres menús (mes pobre, medio y día de paga) son los mismos platos para todos: lo que cambia es el <b>tamaño de la ración</b>. Al aplicar tus números, la app te dice a qué porcentaje comer y cuánto arroz y avena te tocan. El recorte o el aumento van siempre al carbohidrato y al aceite — <b>la proteína no se toca</b>, que es lo que protege el músculo.</p>
+      </details>
+      <details>
+        <summary>Aviso</summary>
+        <p>Esto es orientación general, no consejo médico. Si te sale menos de 1.400 kcal, si tienes alguna condición de salud o menos de 18 años, consulta a un profesional antes de ponerte a contar.</p>
+      </details>
+    </section>
   </div>
 </main>
 
@@ -581,6 +649,10 @@
     <button data-pane="bascula" aria-pressed="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 10a5.5 5.5 0 0 1 8 0"/><path d="M12 12.5 14 9"/></svg>
       Báscula
+    </button>
+    <button data-pane="calc" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M8 6.5h8"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h.01M15.5 18h.01"/></svg>
+      Calcular
     </button>
     <button data-pane="guia" aria-pressed="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6.5h12M8.5 12h12M8.5 17.5h12"/><path d="M3.5 6.5h.01M3.5 12h.01M3.5 17.5h.01"/></svg>
@@ -617,20 +689,31 @@
       return true;
     }
 
-    var COLORES = ["#8FA2FF","#5B76FF","#3CC993","#EAEDF8","#8FA2FF","#3CC993"];
+    var COLORES = ["#29E0FF","#FFD84D","#FF3B5C","#F4F8FF","#29E0FF","#3DDC84"];
+    var TXT = "ANIMAL";
+    try{
+      var perf = JSON.parse(localStorage.getItem("modo-animal-v1"));
+      if(perf && perf.perfil && perf.perfil.nombre) TXT = String(perf.perfil.nombre).toUpperCase().slice(0,8);
+    }catch(e){}
     var parts = [];
     var T1 = 1150, T2 = 2150, T3 = 2750;
     var start = 0, raf = 0, burstDone = false, subOn = false, outOn = false;
 
     function build(){
       var off = document.createElement("canvas");
-      var fs = Math.min(150, Math.round(W*0.40));
-      off.width = W; off.height = Math.round(fs*1.3);
       var oc = off.getContext("2d");
+      function fuente(s){ return "900 "+s+'px Archivo, "Arial Black", Arial, sans-serif'; }
+      var fs = Math.min(150, Math.round(W*2.1/Math.max(4, TXT.length)));
+      oc.font = fuente(fs);
+      var tw = oc.measureText(TXT).width;
+      var maxW = W - 24;
+      if(tw > maxW) fs = Math.max(22, Math.floor(fs*maxW/tw)); // que el nombre quepa ENTERO en pantalla
+      off.width = W; off.height = Math.round(fs*1.4);
+      oc = off.getContext("2d"); // redimensionar resetea el contexto
       oc.fillStyle = "#fff";
       oc.textAlign = "center"; oc.textBaseline = "middle";
-      oc.font = "900 "+fs+'px Archivo, "Arial Black", Arial, sans-serif';
-      oc.fillText("JOEL", W/2, off.height/2);
+      oc.font = fuente(fs);
+      oc.fillText(TXT, W/2, off.height/2);
       var data;
       try{ data = oc.getImageData(0,0,off.width,off.height).data; }catch(e){ return false; }
       var step = 3;
@@ -736,79 +819,91 @@
   var RING_C = 389.6;
   var MENUS = {
     pobre: {
-      frase: "Fin de mes: la cartera está en los huesos. Tú, cada día menos.",
+      frase: "Fin de mes, klk: la cartera en los huesos, tú cada vez más duro.",
+      base: { arroz:400, avena:100, prote:"Los huevos y las sardinas" },
       batido: {
-        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","plátano (el de la oferta, magullado vale igual)"],["35 g","de cacahuetes de bolsa"]],
-        tip: "La crema de cacahuete se hace masticando: el cacahuete a granel cuesta la mitad y es lo mismo. Batido de víspera igual que siempre."
+        items: [["100 g","de avena (o avena caliente dominicana, como la de mamá)"],["400–500 ml","de leche entera"],["1","guineo maduro"],["35 g","de cacahuetes de bolsa"],["","Canela al gusto, que eso no engorda"]],
+        tip: "La mantequilla de cacahuete se hace masticando: el cacahuete de bolsa cuesta la mitad y es lo mismo. Déjalo batido de víspera en la nevera."
       },
       comida: {
-        items: [["400 g","de arroz cocido"],["5","huevos (tortilla, revueltos o cocidos)"],["2","latas de atún"],["","Verdura congelada + chorro de aceite"]],
-        tip: "El huevo es la proteína más barata del planeta. Cinco huevos y dos latas = el pollo que no has comprado, por la mitad."
+        items: [["400 g","de arroz blanco cocido"],["150 g","de habichuelas guisadas"],["4","huevos en revoltillo"],["1","lata de sardinas o atún"],["","Ensalada o tayota si hay"]],
+        tip: "El huevo es la proteína más barata del planeta, manín. Revoltillo + habichuelas + arroz = la bandera de los pobres, y alimenta igual."
       },
       cena: {
-        items: [["350 g","de lentejas o garbanzos cocidos"],["200 g","de arroz cocido (dentro del guiso, tipo lentejas con arroz)"],["3","huevos"],["","Verdura al guiso + chorro de aceite"]],
-        tip: "Lentejas con arroz: receta de abuela y de culturista a la vez — juntas hacen proteína completa."
+        items: [["400 g","de mangú o víveres hervidos (plátano, yuca, batata)"],["3","huevos"],["1","lata de sardinas"],["","Cebollita encima, que el mangú sin cebolla es pecado"]],
+        tip: "Mangú con huevo y sardinas: cena de campeón por menos de 1,50 €. Los víveres llenan más que cualquier tontería de paquete."
       },
       compra: [
         ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 5 docenas","11,00 €"],
-        ["Arroz 2 kg","2,20 €"],["Lentejas o garbanzos secos 1 kg","1,90 €"],["Atún, pack 12 latas","8,00 €"],
-        ["Plátanos 2 kg","3,60 €"],["Cacahuetes 500 g","2,00 €"],["Verdura congelada 2 kg","3,00 €"],["Aceite de oliva 1 L","4,80 €"]
+        ["Arroz 2 kg","2,20 €"],["Habichuelas secas 1 kg","2,20 €"],["Sardinas y atún, 10 latas","7,00 €"],
+        ["Plátanos machos y yuca 2 kg","3,20 €"],["Guineos 2 kg","3,60 €"],["Cacahuetes 500 g","2,00 €"],["Aceite 1 L","4,80 €"]
       ],
-      nota: "Precios orientativos de marca blanca. Semana por ~26–30 € (los packs grandes duran más de una). El músculo no mira el ticket."
+      nota: "Precios orientativos de marca blanca. Semana por ~26–30 €. El músculo no mira el ticket, bee."
     },
     medio: {
-      frase: "El clásico del obrero: contramuslos, potaje y a crecer sin arruinarse.",
+      frase: "La bandera cada día: arroz, habichuelas y pollo guisado. Tá to'.",
+      base: { arroz:350, avena:100, prote:"El pollo, los huevos y el atún" },
       batido: {
-        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","plátano"],["30 g","de crema de cacahuete (1 cucharada colmada)"],["","Opcional: cacao puro para el sabor"]],
-        tip: "Batido la noche anterior y a la nevera: la avena se ablanda y queda más fino. Hazlo cada noche, no para varios días. Nada de huevo crudo — si quieres más proteína, un yogur o leche en polvo."
+        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","guineo"],["30 g","de mantequilla de cacahuete (1 cucharada bien colmada)"],["","Opcional: cacao o canela pa'l sabor"]],
+        tip: "Batido la noche anterior y a la nevera: la avena se ablanda y queda cremoso. Cada noche el suyo, no pa' 3 días. Nada de huevo crudo, que eso es de película."
       },
       comida: {
-        items: [["400 g","de arroz cocido (un plato hondo lleno, sin colmar)"],["250 g","de contramuslo de pollo ya cocinado y sin hueso (~350 g en crudo con hueso)"],["","Verdura congelada, la que quieras"],["1 chorro","de aceite de oliva (~10 ml)"]],
-        tip: "Si es carne picada: no es lo mismo que el pollo (250–270 kcal/100 g frente a 165). Cómprala con menos de 10 % de grasa o baja la ración a 300 g."
+        items: [["350 g","de arroz blanco cocido"],["150 g","de habichuelas guisadas"],["200 g","de pollo guisado (sin ahogarlo en aceite)"],["1/2","aguacate"],["","Ensalada verde o tayota"]],
+        tip: "La bandera dominicana completa 🇩🇴 — el plato más equilibrado que existe y no lo sabían ni los nutricionistas. El aguacate va en vez del aceite, no además."
       },
       cena: {
-        items: [["300 g","de lentejas o garbanzos cocidos (plato hondo, o 3/4 de bote grande escurrido)"],["3","huevos (tortilla o cocidos)"],["1","lata de atún, al guiso o de acompañamiento"],["","Verdura al guiso"]],
-        tip: "Olla grande de legumbre el domingo, raciones de 300 g, y tienes cena para 3 días."
+        items: [["350 g","de mangú de plátano"],["3","huevos"],["1","lata de atún"],["1/2","aguacate"],["","Cebollita morada por encima"]],
+        tip: "Mangú con sus huevos, atún y aguacate: los tres golpes versión fitness. El salami y el queso frito déjalos pa'l sábado."
       },
       compra: [
         ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 2 docenas","4,60 €"],
-        ["Arroz 1 kg","1,10 €"],["Contramuslos de pollo 2 kg","9,00 €"],["Lentejas o garbanzos secos 1 kg","1,90 €"],
-        ["Atún, pack 6 latas","4,20 €"],["Plátanos 2 kg","3,60 €"],["Crema de cacahuete 500 g","2,60 €"],
-        ["Verdura congelada 2 kg","3,00 €"],["Aceite de oliva 1 L","4,80 €"]
+        ["Arroz 1 kg","1,10 €"],["Pollo entero o contramuslos 2 kg","9,00 €"],["Habichuelas secas 1 kg","2,20 €"],
+        ["Atún, pack 6 latas","4,20 €"],["Plátanos machos 2 kg","2,80 €"],["Guineos 2 kg","3,60 €"],
+        ["Aguacates, 4","4,00 €"],["Mantequilla de cacahuete 500 g","2,60 €"],["Aceite 1 L","4,80 €"]
       ],
-      nota: "Precios orientativos de marca blanca. La cesta entera da para toda la semana: ~30–38 €."
+      nota: "Precios orientativos de marca blanca. La compra de la semana: ~34–40 €."
     },
     paga: {
-      frase: "Has cobrado, animal. Hoy la proteína no pide perdón.",
+      frase: "Cobré, manín 💸 — hoy la proteína no pide permiso.",
+      base: { arroz:350, avena:80, prote:"La pechuga, el pescado y los huevos" },
       batido: {
-        items: [["80 g","de avena"],["400 ml","de leche entera"],["1","plátano"],["25 g","de crema de cacahuete"],["1","yogur griego dentro del batido (cremoso nivel dios)"]],
-        tip: "Mismo batido pero con percha: el yogur griego mete proteína extra y lo deja como de cafetería de gimnasio."
+        items: [["80 g","de avena"],["400 ml","de leche entera"],["1","guineo"],["25 g","de mantequilla de cacahuete"],["1","yogur griego dentro (cremoso nivel Punta Cana)"]],
+        tip: "Mismo batido pero con flow: el yogur griego mete proteína extra y lo deja como batida de heladería."
       },
       comida: {
-        items: [["400 g","de arroz o pasta cocidos"],["250 g","de pechuga a la plancha o ternera magra (cocinada)"],["","Verdura, la que quieras"],["1 chorro","de aceite de oliva"]],
-        tip: "La pechuga es el lujo silencioso: más proteína por bocado y casi cero grasa. Hoy comes como los de los reels."
+        items: [["350 g","de moro de guandules o arroz"],["250 g","de pechuga a la plancha o res guisada magra"],["1/2","aguacate"],["","Ensalada"]],
+        tip: "Moro con pechuga y aguacate: plato de atleta con sazón de casa. La pechuga es el lujo silencioso — pura proteína."
       },
       cena: {
-        items: [["300 g","de garbanzos o lentejas cocidos"],["200 g","de picada magra cocinada o 1 lata grande de salmón"],["2","huevos"],["","Verdura al guiso"]],
-        tip: "Potaje con picada o salmón: el omega-3 también levanta pesas."
+        items: [["300 g","de habichuelas guisadas o guandules"],["200 g","de pescado guisado o pica pollo casero AL HORNO"],["2","huevos"],["","Ensalada con aguacate si cae"]],
+        tip: "El pica pollo al horno con el mismo sazón queda brutal y no te bebe el aceite. El omega-3 del pescado también levanta pesas."
       },
       compra: [
         ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 1 docena","2,40 €"],
-        ["Arroz y pasta, 2 kg","2,30 €"],["Pechuga de pollo 1,5 kg","10,90 €"],["Ternera o picada magra 1 kg","8,50 €"],
-        ["Salmón, 3 latas grandes","5,40 €"],["Garbanzos o lentejas secos 1 kg","1,90 €"],["Yogur griego, pack 8","2,80 €"],
-        ["Plátanos 2 kg","3,60 €"],["Crema de cacahuete 500 g","2,60 €"],["Verdura congelada 2 kg","3,00 €"],["Aceite de oliva 1 L","4,80 €"]
+        ["Arroz y guandules","4,00 €"],["Pechuga de pollo 1,5 kg","10,90 €"],["Res magra o picada 1 kg","8,50 €"],
+        ["Pescado (merluza o similar) 1 kg","7,50 €"],["Habichuelas secas 1 kg","2,20 €"],["Yogur griego, pack 8","2,80 €"],
+        ["Plátanos y guineos 3 kg","4,80 €"],["Aguacates, 4","4,00 €"],["Mantequilla de cacahuete 500 g","2,60 €"],["Aceite 1 L","4,80 €"]
       ],
-      nota: "Precios orientativos. Semana por ~52–56 €: mismos números, mejor percha. Resérvalo para la semana después de cobrar."
+      nota: "Precios orientativos. Semana por ~55–60 €: mismos números, más flow. Resérvalo pa' la semana después de cobrar."
     }
   };
   var SEMANA = [
-    {dow:1, letra:"L", comida:"Arroz + contramuslos (los del horno del domingo)", cena:"Lentejas con arroz + 3 huevos (la olla ya está hecha)", nota:null},
-    {dow:2, letra:"M", comida:"Pasta con atún y tomate (2 latas)", cena:"Lentejas + tortilla de 3 huevos", nota:null},
-    {dow:3, letra:"X", comida:"Arroz + pollo (última tanda del horno)", cena:"Lentejas (última ración) + lata de atún + 2 huevos", nota:null},
-    {dow:4, letra:"J", comida:"Patata asada o cocida + 4 huevos a la plancha + lata de atún", cena:"Garbanzos salteados con verdura + huevo duro", nota:null},
-    {dow:5, letra:"V", comida:"Macarrones con picada magra y tomate — el plato premio", cena:"Tortilla de patata (cocida, no frita) + lata de atún", nota:null},
-    {dow:6, letra:"S", comida:"Libre con cabeza: un plato social (pizza, hamburguesa…), no un buffet", cena:"Vuelta al plan: legumbre + 3 huevos", nota:"Un plato libre a la semana no rompe nada; siete sí."},
-    {dow:0, letra:"D", comida:"Arroz + pollo al horno (asa bandeja entera: te da para 2 días)", cena:"Garbanzos con verdura + lata de atún", nota:"Día de olla: lentejas para 3 noches, arroz para 2 días y batido de víspera."}
+    {dow:1, letra:"L", comida:"La bandera 🇩🇴: arroz, habichuelas del domingo y pollo guisado + aguacate", cena:"Mangú + 3 huevos + atún", nota:null},
+    {dow:2, letra:"M", comida:"Espaguetis dominicanos con atún (tranquilo con la mayonesa 😅)", cena:"Habichuelas guisadas + revoltillo de 3 huevos", nota:null},
+    {dow:3, letra:"X", comida:"Arroz + pollo guisado (última tanda de la olla)", cena:"Víveres hervidos (yuca, plátano) + huevos + aguacate", nota:null},
+    {dow:4, letra:"J", comida:"Locrio de pollo o de atún", cena:"Habichuelas + huevo duro + ensalada", nota:null},
+    {dow:5, letra:"V", comida:"Espaguetis con carne molida — el plato premio de la semana", cena:"Mangú + tortilla de huevos con cebollita", nota:null},
+    {dow:6, letra:"S", comida:"El junte: pica pollo, hamburguesa… UN combo, no la funda entera 😂", cena:"Vuelta al plan: habichuelas + 3 huevos", nota:"Un plato libre a la semana no rompe nada. Siete sí, manín."},
+    {dow:0, letra:"D", comida:"La bandera completa con pollo guisado recién hecho", cena:"Mangú + huevos + aguacate", nota:"Día de olla: habichuelas pa' 3 noches, arroz pa' 2 días, pollo guisado en tanda y batido de víspera."}
+  ];
+  var FRASES = [
+    "KLK manín, hoy se rompe 💪",
+    "Dale que tú ere' la cabra 🐐",
+    "Sin excusas, bee — a darle",
+    "Tá to', pero el gym no se salta",
+    "El que quiere, puede. Full energía 🔥",
+    "Un día más cerca de la meta, tigre",
+    "Primero el hierro, después el dembow 🎶"
   ];
   var PLAN = [
     {dow:1, letra:"L", grupos:"Espalda + Bíceps", series:"5 espalda × 4 series · 3 bíceps × 4", cardio:"Cardio 20 min", abs:null},
@@ -834,6 +929,13 @@
     if(st.shop) st.shop2.medio = st.shop; // migrar la lista antigua
   }
 
+  // objetivos: los de Joel por defecto, o el perfil calculado si lo hay
+  function goalKcal(g){
+    if(st.perfil && st.perfil.targets && st.perfil.targets[g]) return st.perfil.targets[g];
+    return GOALS[g].kcal;
+  }
+  function protMeta(){ return (st.perfil && st.perfil.prot) || PROT_META; }
+
   function pad(n){ return (n<10?"0":"")+n; }
   function hoyKey(){ var d=new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
   function dia(){ if(!st.days[hoyKey()]) st.days[hoyKey()]={}; return st.days[hoyKey()]; }
@@ -844,8 +946,22 @@
   function renderFecha(){
     var d = new Date();
     document.getElementById("fecha").textContent = DIAS[d.getDay()]+", "+d.getDate()+" de "+MESES[d.getMonth()];
+    var diaAno = Math.floor((d - new Date(d.getFullYear(),0,0)) / 864e5);
+    document.getElementById("fraseDia").textContent = FRASES[diaAno % FRASES.length];
+  }
+  function renderHero(){
+    var n = document.getElementById("heroNombre");
+    var a = document.getElementById("heroApellido");
+    if(st.perfil && st.perfil.nombre){
+      n.textContent = String(st.perfil.nombre).toUpperCase().slice(0,12);
+      a.textContent = "MODO ANIMAL";
+    } else {
+      n.textContent = "MODO ANIMAL";
+      a.textContent = "LA CABRA";
+    }
   }
   renderFecha();
+  renderHero();
 
   // ---- números animados ----
   function animNum(elm, to){
@@ -914,7 +1030,7 @@
   // ---- menú según la cartera ----
   var menuChips = document.querySelectorAll(".chip[data-menu]");
   menuChips.forEach(function(ch){
-    ch.addEventListener("click", function(){ st.menu = ch.getAttribute("data-menu"); save(); renderMenu(); });
+    ch.addEventListener("click", function(){ st.menu = ch.getAttribute("data-menu"); save(); renderMenu(); render(); });
   });
   function renderMenu(){
     var m = MENUS[st.menu];
@@ -1071,7 +1187,7 @@
     var v = Math.round(r.kgSem*100)/100;
     var txt = (v>0?"+":"")+String(v).replace(".",",")+" kg/semana. ";
     if(st.goal==="rec"){
-      if(Math.abs(v)<=0.25){ el.className="good"; el.textContent=txt+"Peso clavado en 85 — justo el plan. Ahora la que manda es la cintura."; }
+      if(Math.abs(v)<=0.25){ el.className="good"; el.textContent=txt+"Peso clavado — justo el plan, la cabra 🐐. Ahora la que manda es la cintura."; }
       else if(v>0.25){ el.className="warn"; el.textContent=txt+"Estás subiendo: recorta un poco el arroz o suma un día de cardio."; }
       else if(v>=-0.5){ el.textContent=txt+"Bajando suave — no es malo si aún te sobra grasa, pero vigila no perder fuerza."; }
       else { el.className="bad"; el.textContent=txt+"Bajas demasiado rápido y ahí se va músculo. Activa el Extra de +300."; }
@@ -1172,25 +1288,54 @@
   // ---- render general ----
   function render(){
     var d = dia();
+    var meta = goalKcal(st.goal);
+    var f = meta/3100; // las kcal escalan al objetivo; la proteína NO se toca (el recorte va al carbohidrato)
+    var mkcal = { batido: Math.round(MEALS.batido.kcal*f), comida: Math.round(MEALS.comida.kcal*f), extra: MEALS.extra.kcal };
+    mkcal.cena = meta - mkcal.batido - mkcal.comida; // la cena absorbe el redondeo: las 3 comidas suman el objetivo EXACTO
     var kcal=0, prot=0;
     cards.forEach(function(card){
       var id=card.getAttribute("data-meal");
+      var esComida = id!=="extra";
+      var mk = mkcal[id];
+      var mp = MEALS[id].prot;
+      if(esComida){
+        card.querySelector(".macros").innerHTML = fmt(mk)+" kcal · <b>"+mp+" g</b> proteína";
+      }
       var on=!!d[id];
       card.querySelector(".check").setAttribute("aria-pressed", on?"true":"false");
       card.classList.toggle("hecha", on);
-      if(on){ kcal+=MEALS[id].kcal; prot+=MEALS[id].prot; }
+      if(on){ kcal+=mk; prot+=mp; }
     });
-    var meta = GOALS[st.goal].kcal;
+    var nota = document.getElementById("ajusteNota");
+    var protExtra = protMeta() > 165;
+    if(Math.abs(f-1)>0.03 || protExtra){
+      nota.hidden = false;
+      var txt = "";
+      var mb = MENUS[st.menu].base;
+      if(f < 0.97){
+        txt = "Raciones al "+Math.round(f*100)+"% para tus "+fmt(meta)+" kcal — el recorte va al arroz (≈"+Math.round(mb.arroz*f)+" g), la avena (≈"+Math.round(mb.avena*f)+" g) y la grasa. "+mb.prote+" ni tocarlos.";
+      } else if(f > 1.03){
+        txt = "Raciones al "+Math.round(f*100)+"% para tus "+fmt(meta)+" kcal — el aumento va al arroz (≈"+Math.round(mb.arroz*f)+" g), la avena (≈"+Math.round(mb.avena*f)+" g) y la grasa.";
+      }
+      if(protExtra){
+        txt += (txt ? " " : "") + "Para llegar a tus "+protMeta()+" g de proteína, suma huevos, atún o leche a las comidas.";
+      }
+      nota.textContent = txt;
+    } else {
+      nota.hidden = true;
+    }
     animNum(document.getElementById("kcalNum"), kcal);
     animNum(document.getElementById("protNum"), prot);
     document.getElementById("kcalMeta").textContent = fmt(meta);
+    document.getElementById("protMetaEl").textContent = protMeta();
     document.getElementById("kcalPct").textContent = Math.round(Math.min(100, kcal/meta*100))+"%";
     var frac = Math.min(1, kcal/meta);
     document.getElementById("ringProg").style.strokeDashoffset = String(RING_C*(1-frac));
-    document.getElementById("protBar").style.width = Math.min(100, prot/PROT_META*100)+"%";
+    document.getElementById("protBar").style.width = Math.min(100, prot/protMeta()*100)+"%";
 
     chips.forEach(function(ch){
       ch.setAttribute("aria-pressed", ch.getAttribute("data-goal")===st.goal ? "true":"false");
+      ch.querySelector("small").textContent = fmt(goalKcal(ch.getAttribute("data-goal")))+" kcal";
     });
 
     var be = document.getElementById("checkEntreno");
@@ -1203,17 +1348,92 @@
     if(!d.comida) pend.push("la comida");
     if(!d.cena) pend.push("la cena");
     if(kcal>meta+200){
-      msg.innerHTML = "Te has pasado en <strong>"+fmt(kcal-meta)+" kcal</strong> — mañana sin Extra y cardio completo.";
+      msg.innerHTML = "Te pasaste por <strong>"+fmt(kcal-meta)+" kcal</strong>, manín — mañana sin Extra y el cardio completo.";
     } else if(falta<=0){
-      msg.innerHTML = "<strong>Día completado.</strong> A dormir bien, que ahí es donde se marca.";
+      msg.innerHTML = "<strong>¡TÁ TO', LA CABRA! 🐐</strong> A dormir bien, que durmiendo es que se crece.";
     } else if(pend.length===0){
       msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — hoy toca el Extra o un puñado más de lo que sea.";
     } else {
-      msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — te queda"+(pend.length>1?"n":"")+" "+pend.join(", ")+".";
+      msg.innerHTML = "Te faltan <strong>"+fmt(falta)+" kcal</strong> — te queda"+(pend.length>1?"n":"")+" "+pend.join(", ")+". Dale, bee.";
     }
 
     veredicto(); notaCintura(); sparkline(); historial(); renderCompra();
   }
+
+  // ---- calculadora ----
+  var sexoSel = "h";
+  var tempPerfil = null;
+  var sexoChips = document.querySelectorAll(".chip[data-sexo]");
+  sexoChips.forEach(function(ch){
+    ch.addEventListener("click", function(){
+      sexoSel = ch.getAttribute("data-sexo");
+      sexoChips.forEach(function(x){ x.setAttribute("aria-pressed", x===ch?"true":"false"); });
+    });
+  });
+  function r50(x){ return Math.round(x/50)*50; }
+  document.getElementById("calcBtn").addEventListener("click", function(){
+    var eEdad=document.getElementById("cEdad"), ePeso=document.getElementById("cPeso"),
+        eAlt=document.getElementById("cAltura"), eDias=document.getElementById("cDias");
+    var edad = parseFloat(eEdad.value);
+    var peso = parseFloat(String(ePeso.value).replace(",","."));
+    var altura = parseFloat(eAlt.value);
+    var dias = parseFloat(eDias.value);
+    if(!(edad>=14&&edad<=90)){ eEdad.focus(); return; }
+    if(!(peso>=35&&peso<=250)){ ePeso.focus(); return; }
+    if(!(altura>=130&&altura<=230)){ eAlt.focus(); return; }
+    if(!(dias>=0&&dias<=7)){ eDias.focus(); return; }
+    var tmb = 10*peso + 6.25*altura - 5*edad + (sexoSel==="h" ? 5 : -161);
+    var fa = dias<=1 ? 1.3 : dias<=3 ? 1.42 : dias<=5 ? 1.55 : 1.68;
+    var tdee = tmb*fa;
+    var rec = r50(tdee);
+    var def = r50(tdee-450);
+    if(def < 1300) def = Math.min(1300, rec); // el suelo nunca puede dejar "definir" por encima de mantener
+    var targets = { def:def, rec:rec, vol:r50(tdee+200) };
+    var prot = Math.round(peso*1.9);
+    var nombre = String(document.getElementById("cNombre").value || "").trim().replace(/[<>]/g,"");
+    if(!nombre && st.perfil && st.perfil.nombre) nombre = st.perfil.nombre; // recalcular no borra el apodo
+    tempPerfil = { targets:targets, prot:prot };
+    if(nombre) tempPerfil.nombre = nombre;
+    var t = document.getElementById("calcTabla");
+    t.innerHTML = "";
+    [["Metabolismo basal", fmt(Math.round(tmb))+" kcal", false],
+     ["Gasto total con tu entreno", fmt(Math.round(tdee))+" kcal", false],
+     ["Definir", fmt(targets.def)+" kcal", false],
+     ["Mantener / recomposición", fmt(targets.rec)+" kcal", true],
+     ["Volumen", fmt(targets.vol)+" kcal", false],
+     ["Proteína al día", prot+" g", false]
+    ].forEach(function(row){
+      var div = document.createElement("div");
+      div.className = "fila"+(row[2]?" dest":"");
+      var s = document.createElement("span"); s.textContent = row[0];
+      var b = document.createElement("b"); b.textContent = row[1];
+      div.appendChild(s); div.appendChild(b);
+      t.appendChild(div);
+    });
+    document.getElementById("calcRes").hidden = false;
+  });
+  document.getElementById("aplicarBtn").addEventListener("click", function(){
+    if(!tempPerfil) return;
+    st.perfil = tempPerfil;
+    save(); estadoPerfil(); renderHero(); render();
+    var bHoy = document.querySelector('nav.tabs button[data-pane="hoy"]');
+    if(bHoy) bHoy.click();
+  });
+  function estadoPerfil(){
+    var el = document.getElementById("calcEstado");
+    el.innerHTML = "";
+    if(st.perfil){
+      var quien = st.perfil.nombre ? st.perfil.nombre+" — " : "";
+      el.appendChild(document.createTextNode("Perfil activo: "+quien+fmt(st.perfil.targets.rec)+" kcal · "+st.perfil.prot+" g de proteína. "));
+      var b = document.createElement("button");
+      b.className = "enlace"; b.type = "button";
+      b.textContent = "Quitar y volver a los números base";
+      b.addEventListener("click", function(){ delete st.perfil; save(); estadoPerfil(); renderHero(); render(); });
+      el.appendChild(b);
+    }
+  }
+  estadoPerfil();
+  if(st.perfil && st.perfil.nombre){ document.getElementById("cNombre").value = st.perfil.nombre; }
 
   renderMenu();
   render();
@@ -1231,35 +1451,48 @@
   window.addEventListener("focus", comprobarDia);
   setInterval(comprobarDia, 30000);
 
-  /* ================= AMBIENTE DEL HERO ================= */
+  /* ================= FONDO: ondas neón + partículas ================= */
   (function ambiente(){
     if(REDUCE) return;
-    var cv = document.getElementById("heroCv");
+    var cv = document.getElementById("bgCv");
     var ctx, W, H, DPR, parts=[], f=0, raf=0, activo=true;
     try{ ctx = cv.getContext("2d"); }catch(e){ return; }
     function fit(){
       DPR = Math.min(2, window.devicePixelRatio || 1);
-      var r = hero.getBoundingClientRect();
-      W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
-      cv.width = W*DPR; cv.height = H*DPR;
+      W = Math.max(1, window.innerWidth); H = Math.max(1, window.innerHeight);
+      cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
       ctx.setTransform(DPR,0,0,DPR,0,0);
     }
     fit();
-    var cols = ["#8FA2FF","#3CC993","#F2F4FF"];
-    for(var i=0;i<34;i++){
-      parts.push({ x:Math.random()*W, y:Math.random()*H, v:0.12+Math.random()*0.35,
-                   s:1+Math.random()*1.8, a:Math.random()*6.28, c:cols[i%cols.length] });
+    var cols = ["#29E0FF","#FFD84D","#FF3B5C","#F4F8FF"];
+    for(var i=0;i<44;i++){
+      parts.push({ x:Math.random()*W, y:Math.random()*H, v:0.1+Math.random()*0.3,
+                   s:1+Math.random()*2, a:Math.random()*6.28, c:cols[i%cols.length] });
+    }
+    function onda(yBase, amp, kx, vel, color, alpha){
+      ctx.beginPath();
+      for(var x=0; x<=W; x+=8){
+        var y = yBase + Math.sin(x*kx + f*vel)*amp + Math.sin(x*kx*0.37 + f*vel*0.6)*amp*0.5;
+        if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
     }
     function loop(){
       raf = requestAnimationFrame(loop);
       f++;
       if(f%2) return;
       ctx.clearRect(0,0,W,H);
+      onda(H*0.78, 14, 0.012, 0.006, "#29E0FF", 0.10);
+      onda(H*0.84, 18, 0.009, -0.004, "#FF3B5C", 0.08);
+      onda(H*0.90, 12, 0.014, 0.005, "#FFD84D", 0.07);
       for(var i=0;i<parts.length;i++){
         var p = parts[i];
         p.y -= p.v;
         if(p.y < -4){ p.y = H+4; p.x = Math.random()*W; }
-        ctx.globalAlpha = 0.16 + 0.22*(0.5+0.5*Math.sin(f*0.02+p.a));
+        ctx.globalAlpha = 0.10 + 0.16*(0.5+0.5*Math.sin(f*0.02+p.a));
         ctx.fillStyle = p.c;
         ctx.fillRect(p.x, p.y, p.s, p.s);
       }
