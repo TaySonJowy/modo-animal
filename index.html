@@ -404,7 +404,7 @@
     <div>
       <h2>El menú según la cartera</h2>
       <div class="chips" role="group" aria-label="Menú">
-        <button class="chip" data-menu="pobre" aria-pressed="false">🪫 Fin de mes<small>~3,70 €/día</small></button>
+        <button class="chip" data-menu="pobre" aria-pressed="false">🪫 Fin de mes<small>~4 €/día</small></button>
         <button class="chip" data-menu="medio" aria-pressed="true">🇩🇴 La bandera<small>~5,50 €/día</small></button>
         <button class="chip" data-menu="paga" aria-pressed="false">💸 Cobré, manín<small>~8,50 €/día</small></button>
       </div>
@@ -500,7 +500,7 @@
       <details>
         <summary>Ver la semana entera</summary>
         <div id="semLista"></div>
-        <p class="sem-pie">El batido cae todos los días y las cantidades son las de tu menú. Con "Fin de mes" el pollo se vuelve revoltillo con sardinas; con "Cobré, manín", pechuga o res — la tabla de cambios está en la Guía.</p>
+        <p class="sem-pie">El batido cae todos los días y las cantidades son las de tu menú. Con "Fin de mes" tira más de contramuslos, huevos y atún; con "Cobré, manín", pechuga, picada o pescado — la tabla de cambios está en la Guía.</p>
       </details>
     </section>
   </div>
@@ -557,11 +557,11 @@
       <h2>Reglas rápidas</h2>
       <details>
         <summary>La regla del plato (sin pesar)</summary>
-        <p>Arroz, habichuelas o víveres = <b>un plato hondo lleno</b>. Carne = <b>una pieza como tu palma y algo más</b>. Aguacate = <b>la mitad, no la mata entera</b> 😅. El batido no falla porque va medido de víspera.</p>
+        <p>Arroz, pasta o habichuelas = <b>un plato hondo lleno</b>. Carne = <b>una pieza como tu palma y algo más</b>. Aguacate = <b>la mitad, no la mata entera</b> 😅. El batido no falla porque va medido de víspera.</p>
       </details>
       <details>
         <summary>Cocinado vs crudo — no mezcles</summary>
-        <p>Todas las cantidades de esta app son <b>en cocinado</b>. Si un día pesas en crudo: el arroz triplica al cocerse (350 g cocido = 115 g crudo), la habichuela multiplica por 2,5 (150 g guisada = 60 g seca) y el pollo pierde un 30&nbsp;% (200 g guisado = 285 g crudo con hueso).</p>
+        <p>Todas las cantidades de esta app son <b>en cocinado</b>. Si un día pesas en crudo: el arroz triplica al cocerse (350 g cocido = 115 g crudo), la pasta multiplica por 2,5 (350 g cocida = 140 g seca), la habichuela por 2,5 (150 g guisada = 60 g seca) y el pollo pierde un 30&nbsp;% (200 g guisado = 285 g crudo con hueso).</p>
       </details>
       <details>
         <summary>Cuánta proteína necesitas de verdad</summary>
@@ -569,14 +569,14 @@
       </details>
       <details>
         <summary>Para gastar lo mínimo</summary>
-        <p>Huevos y avena son la proteína y las calorías más baratas que existen, manín. Pollo entero o contramuslos antes que pechuga. Habichuela seca antes que de lata. Víveres antes que cualquier paquete. Marca blanca en todo. Este plan sale por <b>4–6 € al día</b>.</p>
+        <p>Huevos y avena son la proteína y las calorías más baratas que existen, manín. Pollo entero o contramuslos antes que pechuga. Habichuela seca antes que de lata. Arroz y pasta a saco, que son lo más barato del súper. Marca blanca en todo. Este plan sale por <b>4–6 € al día</b>.</p>
       </details>
       <details>
         <summary>Tabla de cambios (mismas kcal)</summary>
         <p>Proteína: <b>250 g de pollo guisado</b> = 5 huevos + 1 lata de atún = 300 g de picada magra = 250 g de pechuga o pavo.<br>
-        Carbohidrato: <b>350 g de arroz cocido</b> = 350 g de espaguetis cocidos = 300 g de mangú = 400 g de víveres hervidos (yuca, plátano, batata) = 120 g de pan.<br>
+        Carbohidrato: <b>350 g de arroz cocido</b> = 350 g de espaguetis o macarrones cocidos = 550 g de patata cocida = 120 g de pan.<br>
         Habichuelas: <b>150 g guisadas</b> = guandules = lentejas = garbanzos, tal cual.<br>
-        Fruta: <b>1 guineo</b> = 1 manzana grande = 2 mandarinas = 1 lechosa chiquita en tajadas.<br>
+        Fruta: <b>1 plátano</b> = 1 manzana grande = 2 mandarinas = 1 pera.<br>
         Grasa: <b>30 g de mantequilla de cacahuete</b> = 35 g de cacahuetes = <b>1/2 aguacate</b> = 1 chorro largo de aceite.</p>
       </details>
       <details>
@@ -821,81 +821,83 @@
   var MENUS = {
     pobre: {
       frase: "Fin de mes, klk: la cartera en los huesos, tú cada vez más duro.",
-      base: { arroz:400, avena:100, prote:"Los huevos y las sardinas" },
+      base: { arroz:400, avena:100, prote:"El pollo, los huevos y el atún" },
       batido: {
-        items: [["100 g","de avena (o avena caliente dominicana, como la de mamá)"],["400–500 ml","de leche entera"],["1","guineo maduro"],["35 g","de cacahuetes de bolsa"],["","Canela al gusto, que eso no engorda"]],
+        items: [["100 g","de avena (o avena caliente, como la de mamá)"],["400–500 ml","de leche entera"],["1","plátano"],["35 g","de cacahuetes de bolsa"],["","Canela al gusto, que eso no engorda"]],
         tip: "La mantequilla de cacahuete se hace masticando: el cacahuete de bolsa cuesta la mitad y es lo mismo. Déjalo batido de víspera en la nevera."
       },
       comida: {
-        items: [["400 g","de arroz blanco cocido"],["150 g","de habichuelas guisadas"],["4","huevos en revoltillo"],["1","lata de sardinas o atún"],["","Ensalada o tayota si hay"]],
-        tip: "El huevo es la proteína más barata del planeta, manín. Revoltillo + habichuelas + arroz = la bandera de los pobres, y alimenta igual."
+        items: [["400 g","de arroz blanco cocido"],["150 g","de habichuelas guisadas"],["200 g","de pollo guisado (contramuslos, lo más barato)"],["","Ensalada si hay"]],
+        tip: "Los contramuslos son el pollo del listo: la mitad de precio que la pechuga y más jugosos en el guiso. Arroz a saco, que es lo más barato del súper."
       },
       cena: {
-        items: [["400 g","de mangú o víveres hervidos (plátano, yuca, batata)"],["3","huevos"],["1","lata de sardinas"],["","Cebollita encima, que el mangú sin cebolla es pecado"]],
-        tip: "Mangú con huevo y sardinas: cena de campeón por menos de 1,50 €. Los víveres llenan más que cualquier tontería de paquete."
+        items: [["400 g","de macarrones o espaguetis cocidos"],["2","latas de atún o sardinas"],["","Tomate frito y un huevo duro si quieres rematar"]],
+        tip: "Pasta con atún: cena de campeón en 10 minutos. El huevo es la proteína más barata del planeta, manín."
       },
       compra: [
-        ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 5 docenas","11,00 €"],
-        ["Arroz 2 kg","2,20 €"],["Habichuelas secas 1 kg","2,20 €"],["Sardinas y atún, 10 latas","7,00 €"],
-        ["Plátanos machos y yuca 2 kg","3,20 €"],["Guineos 2 kg","3,60 €"],["Cacahuetes 500 g","2,00 €"],["Aceite 1 L","4,80 €"]
+        ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 3 docenas","6,90 €"],
+        ["Arroz 2 kg","2,20 €"],["Pasta 1 kg","1,10 €"],["Habichuelas secas 1 kg","2,20 €"],
+        ["Atún y sardinas, 8 latas","5,60 €"],["Contramuslos de pollo 1,5 kg","6,80 €"],
+        ["Plátanos 2 kg","3,60 €"],["Cacahuetes 500 g","2,00 €"],["Tomate frito 800 g","1,20 €"],["Aceite 1 L","4,80 €"]
       ],
-      nota: "Precios orientativos de marca blanca. Semana por ~26–30 €. El músculo no mira el ticket, bee."
+      nota: "Precios orientativos de marca blanca. Semana por ~30–34 €. El músculo no mira el ticket, bee."
     },
     medio: {
       frase: "La bandera cada día: arroz, habichuelas y pollo guisado. Tá to'.",
       base: { arroz:350, avena:100, prote:"El pollo, los huevos y el atún" },
       batido: {
-        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","guineo"],["30 g","de mantequilla de cacahuete (1 cucharada bien colmada)"],["","Opcional: cacao o canela pa'l sabor"]],
+        items: [["100 g","de avena"],["400–500 ml","de leche entera"],["1","plátano"],["30 g","de mantequilla de cacahuete (1 cucharada bien colmada)"],["","Opcional: cacao o canela pa'l sabor"]],
         tip: "Batido la noche anterior y a la nevera: la avena se ablanda y queda cremoso. Cada noche el suyo, no pa' 3 días. Nada de huevo crudo, que eso es de película."
       },
       comida: {
-        items: [["350 g","de arroz blanco cocido"],["150 g","de habichuelas guisadas"],["200 g","de pollo guisado (sin ahogarlo en aceite)"],["1/2","aguacate"],["","Ensalada verde o tayota"]],
+        items: [["350 g","de arroz blanco cocido"],["150 g","de habichuelas guisadas"],["200 g","de pollo guisado (sin ahogarlo en aceite)"],["1/2","aguacate"],["","Ensalada verde"]],
         tip: "La bandera dominicana completa 🇩🇴 — el plato más equilibrado que existe y no lo sabían ni los nutricionistas. El aguacate va en vez del aceite, no además."
       },
       cena: {
-        items: [["350 g","de mangú de plátano"],["3","huevos"],["1","lata de atún"],["1/2","aguacate"],["","Cebollita morada por encima"]],
-        tip: "Mangú con sus huevos, atún y aguacate: los tres golpes versión fitness. El salami y el queso frito déjalos pa'l sábado."
+        items: [["350 g","de espaguetis o macarrones cocidos"],["200 g","de carne picada con tomate (vacuno, cerdo o mixta — la que esté de precio)"],["","Un poco de queso rallado si quieres, sin pasarse"]],
+        tip: "Picada con menos de 10 % de grasa y a la sartén sin aceite, que ella suelta el suyo. Pasta + carne = la cena que nunca aburre."
       },
       compra: [
         ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 2 docenas","4,60 €"],
-        ["Arroz 1 kg","1,10 €"],["Pollo entero o contramuslos 2 kg","9,00 €"],["Habichuelas secas 1 kg","2,20 €"],
-        ["Atún, pack 6 latas","4,20 €"],["Plátanos machos 2 kg","2,80 €"],["Guineos 2 kg","3,60 €"],
+        ["Arroz 1 kg","1,10 €"],["Pasta 1 kg","1,10 €"],["Pollo entero o contramuslos 2 kg","9,00 €"],
+        ["Carne picada (vacuno o mixta) 1 kg","6,50 €"],["Habichuelas secas 1 kg","2,20 €"],
+        ["Atún, pack 6 latas","4,20 €"],["Plátanos 2 kg","3,60 €"],["Tomate frito 800 g","1,20 €"],
         ["Aguacates, 4","4,00 €"],["Mantequilla de cacahuete 500 g","2,60 €"],["Aceite 1 L","4,80 €"]
       ],
-      nota: "Precios orientativos de marca blanca. La compra de la semana: ~34–40 €."
+      nota: "Precios orientativos de marca blanca. La compra de la semana: ~38–44 €."
     },
     paga: {
       frase: "Cobré, manín 💸 — hoy la proteína no pide permiso.",
-      base: { arroz:350, avena:80, prote:"La pechuga, el pescado y los huevos" },
+      base: { arroz:350, avena:80, prote:"La pechuga, la picada y el pescado" },
       batido: {
-        items: [["80 g","de avena"],["400 ml","de leche entera"],["1","guineo"],["25 g","de mantequilla de cacahuete"],["1","yogur griego dentro (cremoso nivel Punta Cana)"]],
+        items: [["80 g","de avena"],["400 ml","de leche entera"],["1","plátano"],["25 g","de mantequilla de cacahuete"],["1","yogur griego dentro (cremoso nivel Punta Cana)"]],
         tip: "Mismo batido pero con flow: el yogur griego mete proteína extra y lo deja como batida de heladería."
       },
       comida: {
-        items: [["350 g","de moro de guandules o arroz"],["250 g","de pechuga a la plancha o res guisada magra"],["1/2","aguacate"],["","Ensalada"]],
-        tip: "Moro con pechuga y aguacate: plato de atleta con sazón de casa. La pechuga es el lujo silencioso — pura proteína."
+        items: [["350 g","de arroz o moro de guandules"],["250 g","de pechuga a la plancha o res guisada magra"],["1/2","aguacate"],["","Ensalada"]],
+        tip: "Arroz con pechuga y aguacate: plato de atleta con sazón de casa. La pechuga es el lujo silencioso — pura proteína."
       },
       cena: {
-        items: [["300 g","de habichuelas guisadas o guandules"],["200 g","de pescado guisado o pica pollo casero AL HORNO"],["2","huevos"],["","Ensalada con aguacate si cae"]],
+        items: [["300 g","de espaguetis o macarrones cocidos"],["200 g","de picada de vacuno, pescado guisado o pica pollo casero AL HORNO"],["","Ensalada con aguacate si cae"]],
         tip: "El pica pollo al horno con el mismo sazón queda brutal y no te bebe el aceite. El omega-3 del pescado también levanta pesas."
       },
       compra: [
         ["Avena 1 kg","1,20 €"],["Leche entera 6 L","5,40 €"],["Huevos, 1 docena","2,40 €"],
-        ["Arroz y guandules","4,00 €"],["Pechuga de pollo 1,5 kg","10,90 €"],["Res magra o picada 1 kg","8,50 €"],
+        ["Arroz 1 kg y pasta 1 kg","2,20 €"],["Pechuga de pollo 1,5 kg","10,90 €"],["Picada de vacuno o res magra 1 kg","8,50 €"],
         ["Pescado (merluza o similar) 1 kg","7,50 €"],["Habichuelas secas 1 kg","2,20 €"],["Yogur griego, pack 8","2,80 €"],
-        ["Plátanos y guineos 3 kg","4,80 €"],["Aguacates, 4","4,00 €"],["Mantequilla de cacahuete 500 g","2,60 €"],["Aceite 1 L","4,80 €"]
+        ["Plátanos 2 kg","3,60 €"],["Aguacates, 4","4,00 €"],["Mantequilla de cacahuete 500 g","2,60 €"],["Aceite 1 L","4,80 €"]
       ],
       nota: "Precios orientativos. Semana por ~55–60 €: mismos números, más flow. Resérvalo pa' la semana después de cobrar."
     }
   };
   var SEMANA = [
-    {dow:1, letra:"L", comida:"La bandera 🇩🇴: arroz, habichuelas del domingo y pollo guisado + aguacate", cena:"Mangú + 3 huevos + atún", nota:null},
-    {dow:2, letra:"M", comida:"Espaguetis dominicanos con atún (tranquilo con la mayonesa 😅)", cena:"Habichuelas guisadas + revoltillo de 3 huevos", nota:null},
-    {dow:3, letra:"X", comida:"Arroz + pollo guisado (última tanda de la olla)", cena:"Víveres hervidos (yuca, plátano) + huevos + aguacate", nota:null},
-    {dow:4, letra:"J", comida:"Locrio de pollo o de atún", cena:"Habichuelas + huevo duro + ensalada", nota:null},
-    {dow:5, letra:"V", comida:"Espaguetis con carne molida — el plato premio de la semana", cena:"Mangú + tortilla de huevos con cebollita", nota:null},
-    {dow:6, letra:"S", comida:"El junte: pica pollo, hamburguesa… UN combo, no la funda entera 😂", cena:"Vuelta al plan: habichuelas + 3 huevos", nota:"Un plato libre a la semana no rompe nada. Siete sí, manín."},
-    {dow:0, letra:"D", comida:"La bandera completa con pollo guisado recién hecho", cena:"Mangú + huevos + aguacate", nota:"Día de olla: habichuelas pa' 3 noches, arroz pa' 2 días, pollo guisado en tanda y batido de víspera."}
+    {dow:1, letra:"L", comida:"La bandera 🇩🇴: arroz, habichuelas del domingo y pollo guisado + aguacate", cena:"Espaguetis con carne picada y tomate", nota:null},
+    {dow:2, letra:"M", comida:"Arroz + picada de vacuno o cerdo guisada con habichuelas", cena:"Macarrones con atún (tranquilo con la mayonesa 😅)", nota:null},
+    {dow:3, letra:"X", comida:"Arroz + pollo guisado (última tanda de la olla)", cena:"Revoltillo de 3 huevos + atún + el arroz que sobró", nota:null},
+    {dow:4, letra:"J", comida:"Locrio de pollo o arroz con habichuelas y huevos fritos", cena:"Espaguetis con picada — la que quedó de ayer", nota:null},
+    {dow:5, letra:"V", comida:"Macarrones con carne molida y queso — el plato premio de la semana", cena:"Arroz + pollo guisado o revoltillo", nota:null},
+    {dow:6, letra:"S", comida:"El junte: pica pollo, hamburguesa… UN combo, no la funda entera 😂", cena:"Vuelta al plan: pasta con atún o habichuelas + huevos", nota:"Un plato libre a la semana no rompe nada. Siete sí, manín."},
+    {dow:0, letra:"D", comida:"La bandera completa con pollo guisado recién hecho", cena:"Macarrones con atún y tomate", nota:"Día de olla: habichuelas pa' 3 noches, arroz pa' 2 días, pollo guisado en tanda y batido de víspera."}
   ];
   var FRASES = [
     "KLK manín, hoy se rompe 💪",
